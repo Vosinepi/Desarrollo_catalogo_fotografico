@@ -21,6 +21,7 @@ from catalogo_fotos_app.views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", index, name="index"),
     # URLS de catalogo_fotos_app
     path("catalogo/", include("catalogo_fotos_app.urls")),
 ]

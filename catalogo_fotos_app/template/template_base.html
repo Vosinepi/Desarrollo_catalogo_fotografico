@@ -22,11 +22,11 @@
   <body>
     <nav>
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo">FOTOS Pro</a>
+        <a href="#" class="brand-logo orange-text">FOTOS Pro</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="{% url 'index' %}">Inicio</a></li>
-          <li><a href="{%url 'catalogo' %}">Catalogo</a></li>
-          <li><a href="">Catalogo</a></li>
+          <li><a href="{%url 'catalogo' %}">Fotos</a></li>
+          <li><a href="{% url 'cargar_album' %}">Cargar Album</a></li>
           <li><a href="{% url 'login' %}">Log In</a></li>
         </ul>
       </div>
