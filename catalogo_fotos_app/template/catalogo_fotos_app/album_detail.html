@@ -1,0 +1,63 @@
+{% extends 'template_base.html' %} {% load sass_tags %} {% load static %} {% block tituloPagina %}
+cargar album {% endblock %} 
+{% block css %}
+<link
+type="text/css"
+rel="stylesheet"
+href="{% sass_src 'css/contenedor_fotos.scss' %}"
+media="screen,projection"
+/>
+{% endblock %}
+
+   
+    
+
+{% block contenidoPagina %}
+
+{% if album.is_visible %}
+<article class="row">
+    <header class="col s12 m12 l10 offset-l1">
+        <h1 class="center-align pink-text lighten-4">{{ album.titulo }}</h1>
+    </header>
+    <section class="col s12 m12 l10 offset-l1">
+        <p class = 'flow-text descripcion_album'>{{ album.descripcion }}</p>
+
+    </section>    
+            
+            <div class="m-p-g">
+                <div class="m-p-g__thumbs" data-google-image-layout data-max-height="350">
+                    {% for item in images %}
+                    <img src="{{ item.thumb.url }}" data-full="{{ item.image.url }}" class="m-p-g__thumbs-img" />
+                    {% endfor %}
+                </div>
+            
+                <div class="m-p-g__fullscreen"></div>
+            </div>
+        
+
+    
+    <footer class="col s12 m12 l10 offset-l1">
+        Creado el <time datetime="{{ album.creada|date:"Y-m-d" }}">{{ album.creada|date:"d M Y" }}</time>
+        <p>Tags: {{ album.tags }}</p>
+    </footer>
+</article>
+
+
+
+{% else %}
+<h3>This album is temporarily unavailable.</h3>
+{% endif %}
+
+{% endblock %}
+
+{% block js %}
+<script>
+	var elem = document.querySelector('.m-p-g');
+
+	document.addEventListener('DOMContentLoaded', function() {
+		var gallery = new MaterialPhotoGallery(elem);
+	});
+</script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/material-photo-gallery.min.js"></script>
+
+{% endblock %}

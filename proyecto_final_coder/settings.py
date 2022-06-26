@@ -9,15 +9,13 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-from traitlets import import_item
 
 
 import os
 
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # app terceros
+    "sass_processor",
+    "imagekit",
     "catalogo_fotos_app",
 ]
 
@@ -83,7 +84,7 @@ WSGI_APPLICATION = "proyecto_final_coder.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -120,16 +121,23 @@ USE_TZ = True
 
 DATE_INPUT_FORMATS = ["%d-%m-%Y"]
 
-# Static files (CSS, JavaScript, Images)
 
-STATIC_ROOT = ""
+# Static files (CSS, JavaScript, Images)
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATICFILES_DIRS = (os.path.join("static"),)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR + "/media/"
 
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+    }
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -139,4 +147,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "sass_processor.finders.CssFinder",
 ]
+
+# Django Sass
+STATIC_ROOT = BASE_DIR + "static"
+
+SASS_PROCESSOR_ROOT = STATIC_ROOT

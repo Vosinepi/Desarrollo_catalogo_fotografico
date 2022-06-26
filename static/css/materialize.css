@@ -10,65 +10,14 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #e8eaf6;
+  background-color: #B2DFDB;
 }
 
 main {
   flex: 1 0 auto;
 }
 
-.descripcion_album {
-  margin: 0px auto 25px auto;
-  width: 54%;
-}
 
-.mosaico {
-   /* Contenedor album */
-  -webkit-column-count: 4;
-  -moz-column-count:4;
-  column-count: 4;
-  -webkit-column-gap: 1em;
-  -moz-column-gap: 1em;
-  column-gap: 1em;
-  margin: 1.5em;
-  padding: 0;
-  -moz-column-gap: 1.5em;
-  -webkit-column-gap: 1.5em;
-  column-gap: 1.5em;
-  font-size: .85em;
-}
-
-.foto_mosaico {
-  display: inline-block;
-  background: #fff;
-  padding: 1em;
-  margin: 0 0 1.5em;
-  -webkit-transition:1s ease all;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-shadow: 2px 2px 4px 0 #ccc;
-}
-.foto_mosaico img{max-width:100%;}
-
-
-.tituloFoto {
-  margin: -50px 0px 17px 10px;
-  position: absolute;
-  color: white ;
-  font-size: 26px ;
-  font-weight: 600;
-  -webkit-transition:0.7s;
-  transition-timing-function: ease;
-}
-
-.tituloFoto:hover {
-  margin: -60px 0px 17px 10px;
-  color: #FF9800;
-  font-size: 28px;
-  -webkit-transition:0.7s;
-  transition-timing-function: ease;
-}
 
 .materialize-red {
   background-color: #e51c23 !important;

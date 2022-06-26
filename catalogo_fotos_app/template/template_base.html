@@ -1,7 +1,8 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
     <!--Import Google Icon Font-->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -15,19 +16,20 @@
       media="screen,projection"
     />
 
+    {% block css %}{% endblock %}
     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>{% block tituloPagina %} {% endblock %}</title>
   </head>
   <body>
     <nav>
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo orange-text">FOTOS Pro</a>
+        <a href="{% url 'index' %}" class="brand-logo orange-text">Fotos PRO</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="{% url 'index' %}">Inicio</a></li>
           <li><a href="{%url 'catalogo' %}">Fotos</a></li>
           <li><a href="{% url 'cargar_album' %}">Cargar Album</a></li>
-          <li><a href="{% url 'login' %}">Log In</a></li>
+          <li><a href="{% url 'login' %}">Iniciar Sesion</a></li>
         </ul>
       </div>
     </nav>
@@ -41,9 +43,12 @@
       </div>
     </footer>
     <!--JavaScript at end of body for optimized loading-->
+    <script src="{% static 'material/js/jquery-2.2.0.js' %}"></script>
     <script
       type="text/javascript"
       src="{% static 'js/materialize.min.js'%}"
     ></script>
+    <script type="text/javascript" src="{% static 'app.js' %}"></script>
+    {% block js %}{% endblock %}
   </body>
 </html>
