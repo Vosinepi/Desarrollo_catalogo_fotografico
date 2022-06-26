@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 import catalogo_fotos_app.views as views
 
+app_name = "mymodule"  # So we can use it like: {% url 'mymodule:user_login' %} on our template.
 urlpatterns = [
     path("admin/", admin.site.urls),
     re_path("base/", views.base, name="base"),
@@ -27,6 +28,6 @@ urlpatterns = [
     re_path(r"catalogo", views.catalogo, name="catalogo"),  # albumes
     re_path(r"^(?P<slug>[-\w]+)$", views.AlbumDetail.as_view(), name="album"),  # vista
     path("cargar_album/", views.cargar_album, name="cargar_album"),
-    path("login/", views.log_in, name="login"),
+    re_path(r"^login/$", views.user_login, name="user_login"),
     # URLS de catalogo_fotos_app
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

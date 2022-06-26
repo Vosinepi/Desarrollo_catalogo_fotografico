@@ -2,7 +2,12 @@
 Login {% endblock %} {% block contenidoPagina %}
 
 <main>
-  <h1 class="center-align pink-text lighten-4">Cargar Album</h1>
+  <div name="formulario" class="formulario">
+    <form method="post" novalidate>
+      {% csrf_token %} {{ carga_familia_form }}
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
 </main>
 
 {% endblock %}

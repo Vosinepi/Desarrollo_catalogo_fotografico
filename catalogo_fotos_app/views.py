@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView
+from django.contrib.auth import authenticate, login
 
+from .forms import *
 from .models import Album, AlbumImage
+from .admin import *
 
 
 def index(request):
@@ -42,11 +45,39 @@ class AlbumDetail(DetailView):
 
 
 def cargar_album(request):
-    return render(request, "cargar_album.html")
+
+    if request.method == "POST":
+        form = CargarAlbum(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = CargarAlbum()
+
+    return render(request, "cargar_album.html", {"carga_familia_form": CargarAlbum})
 
 
-def log_in(request):
-    return render(request, "login.html")
+def user_login(request):
+    if request.method == "POST":
+        # Process the request if posted data are available
+        username = request.POST["username"]
+        password = request.POST["password"]
+        # Check username and password combination if correct
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            # Save session as cookie to login the user
+            login(request, user)
+            # Success, now let's login the user.
+            return render(request, "index.html")
+        else:
+            # Incorrect credentials, let's throw an error to the screen.
+            return render(
+                request,
+                "login.html",
+                {"error_message": "Incorrect username and / or password."},
+            )
+    else:
+        # No post data availabe, let's just show the page to the user.
+        return render(request, "login.html")
 
 
 def base(request):
