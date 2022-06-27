@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 from .forms import *
 from .models import Album, AlbumImage
@@ -11,10 +12,6 @@ from .admin import *
 
 def index(request):
     return render(request, "index.html")
-
-
-def template_base(request):
-    return render(request, "template_base.html")
 
 
 def catalogo(request):
@@ -44,16 +41,51 @@ class AlbumDetail(DetailView):
         return context
 
 
+@login_required
 def cargar_album(request):
 
     if request.method == "POST":
-        form = CargarAlbum(request.POST)
+        form = CargarAlbum(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            album = form.save(commit=False)
+            album.modified = datetime.now()
+            album.save()
+
+            if form.cleaned_data["zip"] != None:
+                zip = zipfile.ZipFile(form.cleaned_data["zip"])
+                for filename in sorted(zip.namelist()):
+
+                    file_name = os.path.basename(filename)
+                    if not file_name:
+                        continue
+
+                    data = zip.read(filename)
+                    contentfile = ContentFile(data)
+
+                    img = AlbumImage()
+                    img.album = album
+                    img.alt = filename
+                    filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
+                    img.image.save(filename, contentfile)
+
+                    filepath = "{0}/albums/{1}".format(
+                        proyecto_final_coder.settings.MEDIA_ROOT, filename
+                    )
+                    with Image.open(filepath) as i:
+                        img.width, img.height = i.size
+
+                    img.thumb.save("thumb-{0}".format(filename), contentfile)
+                    img.save()
+                zip.close()
+
     else:
         form = CargarAlbum()
 
-    return render(request, "cargar_album.html", {"carga_familia_form": CargarAlbum})
+    return render(
+        request,
+        "cargar_album.html",
+        {"carga_familia_form": CargarAlbum},
+    )
 
 
 def user_login(request):
