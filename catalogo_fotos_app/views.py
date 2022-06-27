@@ -45,7 +45,8 @@ class AlbumDetail(DetailView):
 def cargar_album(request):
 
     if request.method == "POST":
-        form = CargarAlbum(request.POST, request.FILES)
+        form = AlbumForm(request.POST, request.FILES)
+        print(form.is_valid())
         if form.is_valid():
             album = form.save(commit=False)
             album.modified = datetime.now()
@@ -78,13 +79,13 @@ def cargar_album(request):
                     img.save()
                 zip.close()
 
-    else:
-        form = CargarAlbum()
+        else:
+            form = AlbumForm()
 
     return render(
         request,
         "cargar_album.html",
-        {"carga_familia_form": CargarAlbum},
+        {"carga_familia_form": AlbumForm},
     )
 
 
