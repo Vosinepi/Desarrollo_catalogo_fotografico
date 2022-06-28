@@ -3,52 +3,52 @@ Login {% endblock %} {% block contenidoPagina %}
 
 <main>
   <div class="container">
-    <form action="{% url 'user_login' %}" method="post">
-      {% csrf_token %}
-      <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-          <h3 class="center-align pink-text lighten-4 panel-heading">
-            Iniciar Sesion
-          </h3>
-          <div class="panel-body">
-            {% if error_message %}
-            <p class="bg-danger p-d ml-b">{{ error_message }}</p>
-            {% endif %}
-            <div class="form-group clearfix">
-              <label for="username" class="col-md-4 control-label text-right"
-                >Usuario:</label
-              >
-              <div class="col-md-6">
-                <input
-                  name="username"
-                  value=""
-                  type="text"
-                  class="form-control"
-                />
-              </div>
-            </div>
-            <div class="form-group clearfix">
-              <label for="password" class="col-md-4 control-label text-right"
-                >Contraseña:</label
-              >
-              <div class="col-md-6">
-                <input name="password" type="password" class="form-control" />
-              </div>
-            </div>
-            <div class="col-md-6 col-md-offset-4">
+    <h3 class="center-align pink-text lighten-4 panel-heading">
+      Iniciar Sesion
+    </h3>
+    <div class="row">
+      <form class="col s12" action="{% url 'user_login' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+          {% if error_message %}
+          <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+          {% endif %}
+
+          <div class="row">
+            <div class="input-field col s12">
               <input
-                name="login"
-                type="submit"
-                value="Login"
-                class="btn btn-success"
+                name="username"
+                id="username"
+                type="text"
+                class="validate"
               />
-              &nbsp;
-              <a href="/mymodule/register">or Register</a>
+              <label class="validate" for="username">Usuario</label>
             </div>
           </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                name="password"
+                id="password"
+                type="password"
+                class="validate"
+              />
+              <label class="validate" for="password">Contraseña</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-md-offset-4">
+            <input
+              name="login"
+              type="submit"
+              value="Login"
+              class="btn btn-success"
+            />
+            &nbsp;
+            <a href="{% url 'registro_usuario' %}">o Registrate</a>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </main>
 

@@ -6,7 +6,7 @@ from django.core.paginator import (
     PageNotAnInteger,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, DeleteView, FormView
+from django.views.generic import DetailView, DeleteView, FormView, TemplateView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
@@ -128,3 +128,7 @@ def user_login(request):
 # vista base
 def base(request):
     return render(request, "template_base.html")
+
+
+class Registro_usuario(TemplateView):
+    template_name = "registro_usuario.html"

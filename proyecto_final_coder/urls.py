@@ -31,5 +31,8 @@ urlpatterns = [
     re_path(r"catalogo", views.catalogo, name="catalogo"),  # albumes
     re_path(r"^album/(?P<slug>[-\w]+)$", views.AlbumDetail.as_view(), name="album"),
     path("cargar_album/", views.CargarAlbum.as_view(), name="cargar_album"),
+    path(
+        "registro_usuario/", views.Registro_usuario.as_view(), name="registro_usuario"
+    ),
     re_path(r"^login/$", views.user_login, name="user_login"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
