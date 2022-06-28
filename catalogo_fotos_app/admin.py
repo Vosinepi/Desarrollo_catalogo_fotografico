@@ -24,7 +24,7 @@ class Users(admin.ModelAdmin):
 
 
 @admin.register(Album)
-class AlbumModelAdmin(admin.ModelAdmin):
+class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
     form = AlbumForm
     prepopulated_fields = {"slug": ("titulo",)}
     list_display = ("titulo", "thumb")
@@ -63,9 +63,6 @@ class AlbumModelAdmin(admin.ModelAdmin):
                     img.save()
                 zip.close()
             super(AlbumModelAdmin, self).save_model(request, obj, form, change)
-
-
-# In case image should be removed from album.
 
 
 @admin.register(AlbumImage)
