@@ -7,14 +7,16 @@ Login {% endblock %} {% block contenidoPagina %}
       {% csrf_token %}
       <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
-          <div class="panel-heading">Login</div>
+          <h3 class="center-align pink-text lighten-4 panel-heading">
+            Iniciar Sesion
+          </h3>
           <div class="panel-body">
             {% if error_message %}
             <p class="bg-danger p-d ml-b">{{ error_message }}</p>
             {% endif %}
             <div class="form-group clearfix">
               <label for="username" class="col-md-4 control-label text-right"
-                >Username:</label
+                >Usuario:</label
               >
               <div class="col-md-6">
                 <input
@@ -27,7 +29,7 @@ Login {% endblock %} {% block contenidoPagina %}
             </div>
             <div class="form-group clearfix">
               <label for="password" class="col-md-4 control-label text-right"
-                >Password:</label
+                >Contraseña:</label
               >
               <div class="col-md-6">
                 <input name="password" type="password" class="form-control" />

@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import DetailView
+from django.core.paginator import (
+    Paginator,
+    EmptyPage,
+    PageNotAnInteger,
+)
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView, DeleteView, FormView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
@@ -12,6 +17,9 @@ from .admin import *
 
 def index(request):
     return render(request, "index.html")
+
+
+# catalogo
 
 
 def catalogo(request):
@@ -30,65 +38,69 @@ def catalogo(request):
     return render(request, "catalogo.html", {"albums": list})
 
 
+# vista detallada de un album
 class AlbumDetail(DetailView):
     model = Album
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(AlbumDetail, self).get_context_data(**kwargs)
+
         # Add in a QuerySet of all the images
         context["images"] = AlbumImage.objects.filter(album=self.object.id)
+        print(context["images"][0].album.slug)
         return context
 
 
-@login_required
-def cargar_album(request):
+# carga de albumes por app
+class CargarAlbum(LoginRequiredMixin, FormView):
+    model = Album
+    template_name = "cargar_album.html"
+    form_class = AlbumForm
+    success_url = "exito"
 
-    if request.method == "POST":
-        form = AlbumForm(request.POST, request.FILES)
-        print(form.is_valid())
-        if form.is_valid():
-            album = form.save(commit=False)
-            album.modified = datetime.now()
-            album.save()
+    def form_valid(self, form):
+        print("funcion save_model")
 
-            if form.cleaned_data["zip"] != None:
-                zip = zipfile.ZipFile(form.cleaned_data["zip"])
-                for filename in sorted(zip.namelist()):
+        print("validacion ok")
+        album = form.save(commit=False)
+        album.modified = datetime.now()
+        album.save()
 
-                    file_name = os.path.basename(filename)
-                    if not file_name:
-                        continue
+        if form.cleaned_data["zip"] != None:
+            zip = zipfile.ZipFile(form.cleaned_data["zip"])
+            for filename in sorted(zip.namelist()):
 
-                    data = zip.read(filename)
-                    contentfile = ContentFile(data)
+                file_name = os.path.basename(filename)
+                if not file_name:
+                    continue
 
-                    img = AlbumImage()
-                    img.album = album
-                    img.alt = filename
-                    filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
-                    img.image.save(filename, contentfile)
+                data = zip.read(filename)
+                contentfile = ContentFile(data)
 
-                    filepath = "{0}/albums/{1}".format(
-                        proyecto_final_coder.settings.MEDIA_ROOT, filename
-                    )
-                    with Image.open(filepath) as i:
-                        img.width, img.height = i.size
+                img = AlbumImage()
+                img.album = album
+                img.alt = filename
+                filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
+                img.image.save(filename, contentfile)
 
-                    img.thumb.save("thumb-{0}".format(filename), contentfile)
-                    img.save()
-                zip.close()
+                filepath = "{0}/albums/{1}".format(
+                    proyecto_final_coder.settings.MEDIA_ROOT, filename
+                )
+                with Image.open(filepath) as i:
+                    img.width, img.height = i.size
 
-        else:
-            form = AlbumForm()
-
-    return render(
-        request,
-        "cargar_album.html",
-        {"carga_familia_form": AlbumForm},
-    )
+                img.thumb.save("thumb-{0}".format(filename), contentfile)
+                img.save()
+            zip.close()
+        return super(CargarAlbum, self).form_valid(form)
 
 
+def subida_exitosa(request):
+    return render(request, "subida_exitosa.html")
+
+
+# inicio de sesion
 def user_login(request):
     if request.method == "POST":
         # Process the request if posted data are available
@@ -113,5 +125,6 @@ def user_login(request):
         return render(request, "login.html")
 
 
+# vista base
 def base(request):
     return render(request, "template_base.html")

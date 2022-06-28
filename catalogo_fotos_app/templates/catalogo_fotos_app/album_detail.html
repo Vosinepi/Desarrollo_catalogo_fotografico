@@ -26,12 +26,16 @@ media="screen,projection"
             
             <div class="m-p-g">
                 <div class="m-p-g__thumbs" data-google-image-layout data-max-height="350">
+                  
                     {% for item in images %}
+                    
                     <img src="{{ item.thumb.url }}" data-full="{{ item.image.url }}" class="m-p-g__thumbs-img" />
                     {% endfor %}
                 </div>
             
-                <div class="m-p-g__fullscreen"></div>
+                <div class="m-p-g__fullscreen">
+                   
+                </div>
             </div>
         
 

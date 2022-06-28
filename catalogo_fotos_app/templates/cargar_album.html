@@ -1,0 +1,25 @@
+{% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
+Login {% endblock %} {% block contenidoPagina %}
+
+<main>
+  <h3 class="center-align pink-text lighten-4 panel-heading">Cargar album</h3>
+  <div class="container">
+    <div name="formulario" class="formulario">
+      <! agregar def en la view>
+      {% if mensaje %}
+      <div class="alert alert-info">{{ mensaje }}</div>
+
+      {% endif %}
+      <form
+        class="panel panel-default"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %} {{ form.as_p }}
+        <input type="submit" value="Guardar" />
+      </form>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

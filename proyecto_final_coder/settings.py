@@ -61,7 +61,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            r"C:\Users\ismael\Desktop\html\pytho-coder\proyecto final coder\proyecto_final_coder\catalogo_fotos_app\template",
+            r"C:\Users\ismael\Desktop\html\pytho-coder\proyecto final coder\proyecto_final_coder\catalogo_fotos_app\templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
