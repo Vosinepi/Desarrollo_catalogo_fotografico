@@ -29,7 +29,15 @@
           <li><a href="{% url 'index' %}">Inicio</a></li>
           <li><a href="{%url 'catalogo' %}">Fotos</a></li>
           <li><a href="{% url 'cargar_album' %}">Cargar Album</a></li>
+          {% if user.is_authenticated%}
+          <li>
+            <a>Hola, {{user.username}}</a>
+          </li>
+          <li><a href="{% url 'user_logout' %}">Cerrar Sesion</a></li>
+          {% else%}
           <li><a href="{% url 'user_login' %}">Iniciar Sesion</a></li>
+          <li><a href="{% url 'registro_usuario' %}">Registrate</a></li>
+          {%endif%}
         </ul>
       </div>
     </nav>

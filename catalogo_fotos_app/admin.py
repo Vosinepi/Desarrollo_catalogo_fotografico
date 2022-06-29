@@ -17,12 +17,6 @@ from .forms import AlbumForm
 # Register your models here.
 
 
-@admin.register(Users)
-class Users(admin.ModelAdmin):
-    list_display = ("nombre", "apellido", "mail", "user", "password")
-    search_fields = ("nombre", "apellido", "mail", "user")
-
-
 @admin.register(Album)
 class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
     form = AlbumForm

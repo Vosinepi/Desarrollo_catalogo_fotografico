@@ -7,8 +7,10 @@ from django.core.paginator import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, DeleteView, FormView, TemplateView
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .forms import *
 from .models import Album, AlbumImage
@@ -103,26 +105,43 @@ def subida_exitosa(request):
 # inicio de sesion
 def user_login(request):
     if request.method == "POST":
-        # Process the request if posted data are available
-        username = request.POST["username"]
-        password = request.POST["password"]
-        # Check username and password combination if correct
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            # Save session as cookie to login the user
-            login(request, user)
-            # Success, now let's login the user.
-            return render(request, "index.html")
-        else:
-            # Incorrect credentials, let's throw an error to the screen.
-            return render(
-                request,
-                "login.html",
-                {"error_message": "Incorrect username and / or password."},
-            )
-    else:
-        # No post data availabe, let's just show the page to the user.
-        return render(request, "login.html")
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("index")
+            else:
+                return render(request, "login.html", {"form": form})
+    form = AuthenticationForm()
+    return render(request, "login.html", {"form": form})
+
+
+def logOut(request):
+    logout(request)
+    return redirect("index")
+
+
+def register_user(request):
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password1")
+            print(username)
+            form.save()
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("index")
+            else:
+                return redirect("login")
+        print("no valido")
+        return render(request, "registro_usuario.html", {"form": form})
+    form = UserRegisterForm()
+    return render(request, "registro_usuario.html", {"form": form})
 
 
 # vista base
