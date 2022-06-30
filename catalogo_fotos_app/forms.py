@@ -96,6 +96,5 @@ class UserRegisterForm(UserCreationForm):
             "email",
             "password1",
             "password2",
-            "check",
         ]
         help_texts = {k: "" for k in fields}
