@@ -3,7 +3,7 @@ import uuid
 import zipfile
 import proyecto_final_coder.settings
 from datetime import datetime
-from zipfile import ZipFile
+
 
 from django.contrib import admin
 from django.core.files.base import ContentFile
