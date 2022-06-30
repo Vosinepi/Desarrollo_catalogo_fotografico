@@ -34,4 +34,5 @@ urlpatterns = [
     path("registro_usuario/", views.register_user, name="registro_usuario"),
     re_path("login/", views.user_login, name="user_login"),
     path("logout/", views.logOut, name="user_logout"),
+    path("terminos.html", views.terminos_condiciones, name="terminos"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

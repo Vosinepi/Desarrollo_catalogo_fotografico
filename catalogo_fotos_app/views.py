@@ -10,7 +10,8 @@ from django.views.generic import DetailView, DeleteView, FormView, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+
+from django.contrib import messages
 
 from .forms import *
 from .models import Album, AlbumImage
@@ -132,12 +133,19 @@ def register_user(request):
             password = form.cleaned_data.get("password1")
             print(username)
             form.save()
+            user = form.cleaned_data.get("username")
+            messages.success(request, "Cuenta creada para " + user)
+
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect("index")
             else:
                 return redirect("login")
+        else:
+            print("no valido")
+            messages.error(request, "Error al procesar solicitud")
+
         print("no valido")
         return render(request, "registro_usuario.html", {"form": form})
     form = UserRegisterForm()
@@ -151,3 +159,7 @@ def base(request):
 
 class Registro_usuario(TemplateView):
     template_name = "registro_usuario.html"
+
+
+def terminos_condiciones(request):
+    return render(request, "terminos_y_condiciones.html")

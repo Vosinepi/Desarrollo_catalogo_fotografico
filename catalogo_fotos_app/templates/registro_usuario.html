@@ -4,20 +4,126 @@ Registro {% endblock %} {% block contenidoPagina %}
 <main>
   <div class="container">
     <h3 class="center-align pink-text lighten-4 panel-heading">Registrate</h3>
-    <form action="" method="post">
-      {% csrf_token %}
-      {{form.as_p}}
-      <input
-      name="login"
-      type="submit"
-      value="Registrate"
-      class="btn btn-success"
-    />
-  </form>
-          &nbsp;
-          <a href="{% url 'user_login' %}">o Inicia sesion</a>
-        </div>
-      </form>
+    <div class="row">
+      <form class="col s12" action="{% url 'registro_usuario' %}" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col s12">
+            {% if form.errors %} {% for field in form %} {% for error in
+            field.errors %}
+              <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+                <strong>{{ field|escape }}</strong>
+              </div>
+            {% endfor %} {% else %} {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+              </div>
+            {% endfor %} {% endif %}
+              <div class="col s6">
+                <div class="form-group position-relative input-field">
+                <label>Nombre <span class="text-danger">*</span></label>
+                {{form.name}}
+                </div>
+              {% if form.first_name.errors %}
+              {% for error in form.first_name.errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+                <div class="col s6">
+                    <div class="form-group position-relative input-field">
+                    <label>Apellido <span class="text-danger">*</span></label>
+                    {{form.last_name}}
+                    </div>
+                {% if form.last_name.errors %}
+                {% for error in form.last_name.errors %}
+                    <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col s12">
+                    <div class="form-group position-relative input-field">
+                    <label>Email <span class="text-danger">*</span></label>
+                    {{form.email}}
+                    </div>
+                {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col s12">
+                    <div class="form-group position-relative input-field">
+                    <label>Usuario <span class="text-danger">*</span></label>
+                    {{form.username}}
+                    </div>
+                {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col s6">
+                  <div class="form-group position-relative input-field">
+                  <label>Contraseña <span class="text-danger">*</span></label>
+                  {{form.password1}}
+                  </div>
+                {% if form.password1.errors %}
+                {% for error in form.password1.errors %}
+                  <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                  </div>
+                {% endfor %}
+                {% endif %}
+                </div>
+                <div class="col s6">
+                  <div class="form-group position-relative input-field">
+                  <label>Confirma contraseña <span class="text-danger">*</span></label>
+                  {{form.password2}}
+                  </div>
+                  {% if form.password2.errors %}
+                  {% for error in form.password2.errors %}
+                  <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+               <div class="col s12">
+              <div class="form-group">
+                <div class="custom-control">
+                  {{form.check}}
+                  <label >I Accept <a href="{% url 'terminos' %}" class="text-primary">Terminos Y Condiciones</a></label>
+                </div>
+                {% if form.check.errors %}
+                {% for error in form.check.errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+              {% endfor %}
+              {% endif %}
+              </div>
+              </div>
+              <div class="col s6">
+                <input
+                  name="Registrate"
+                  type="submit"
+                  value="Registrate"
+                  class="btn btn-success"
+                />
+                &nbsp;
+                <a href="{% url 'user_login' %}">o Inicia sesion</a>
+              </div>
+          </form>
     </div>
   </div>
 </main>

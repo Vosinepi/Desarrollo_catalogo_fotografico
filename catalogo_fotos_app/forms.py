@@ -16,17 +16,86 @@ class AlbumForm(forms.ModelForm):
 
 class UserRegisterForm(UserCreationForm):
     name = forms.CharField(
-        label="Nombre", max_length=30, required=False, help_text="Optional."
+        label="Nombre",
+        max_length=30,
+        required=False,
+        help_text="Ingresa tu nombre",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+            }
+        ),
     )
     last_name = forms.CharField(
-        label="Apellido", max_length=30, required=False, help_text="Optional."
+        max_length=30,
+        required=False,
+        help_text="Ingresa tu apellido",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+            }
+        ),
     )
-    username = forms.CharField(label="Usuario", max_length=30, required=False)
-    email = forms.EmailField(label="Email")
-    password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Repetir contraseña", widget=forms.PasswordInput)
+    username = forms.CharField(
+        label="Usuario",
+        max_length=30,
+        required=True,
+        help_text="Ingresa tu usuario",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+            }
+        ),
+    )
+    email = forms.EmailField(
+        label="Email",
+        required=True,
+        help_text="Ingresa tu email",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+            }
+        ),
+    )
+    password1 = forms.CharField(
+        label="Contraseña",
+        required=True,
+        help_text="Ingresa tu contraseña",
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+            }
+        ),
+    )
+    password2 = forms.CharField(
+        label="Repetir contraseña",
+        required=True,
+        help_text="Repite tu contraseña",
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+            }
+        ),
+    )
+
+    check = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(
+            attrs={
+                "type": "checkbox",
+            }
+        ),
+    )
 
     class Meta:
         model = User
-        fields = ["name", "last_name", "username", "email", "password1", "password2"]
+        fields = [
+            "name",
+            "last_name",
+            "username",
+            "email",
+            "password1",
+            "password2",
+            "check",
+        ]
         help_texts = {k: "" for k in fields}
