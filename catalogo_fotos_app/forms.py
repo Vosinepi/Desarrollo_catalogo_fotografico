@@ -78,14 +78,14 @@ class UserRegisterForm(UserCreationForm):
         ),
     )
 
-    check = forms.BooleanField(
-        required=True,
-        widget=forms.CheckboxInput(
-            attrs={
-                "type": "checkbox",
-            }
-        ),
-    )
+    # check = forms.BooleanField(
+    #     required=True,
+    #     widget=forms.CheckboxInput(
+    #         attrs={
+    #             "type": "checkbox",
+    #         }
+    #     ),
+    # )
 
     class Meta:
         model = User
