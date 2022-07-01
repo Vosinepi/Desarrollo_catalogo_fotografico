@@ -23,3 +23,5 @@
 - Implementacion de niveles de usuarios.
 - Marca de agua a las fotografias.
 - Creacion de un sistema de E-commerce con su correspondiente carro de compras.
+- Agregar bucador de albumes por codigo, posible implementacion de QR.
+- Modo oscuro de la app.
