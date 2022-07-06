@@ -6,5 +6,5 @@ psycopg2
 pillow
 django-imagekit
 django-sass-processor
-
+libsass
 datetime
