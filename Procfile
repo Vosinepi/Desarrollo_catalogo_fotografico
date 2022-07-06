@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath proyecto_final_coder proyecto_final_coder.wsgi
