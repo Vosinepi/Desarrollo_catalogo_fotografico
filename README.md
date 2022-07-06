@@ -15,10 +15,13 @@
 
 ## Modulos / librerias
 
+- Instalar las librerias de Requirement.txt
 - Se utliza Sass para la generacion de estilos. Instalar con pip sass processor y agregar a APPS.
 - Tambien usamos Imagekit para el procesado de las imagenes. Instalar con pip y agregar a APPS.
 
 ## A Futuro
+
+pr
 
 - Implementacion de niveles de usuarios.
 - Marca de agua a las fotografias.
