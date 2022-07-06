@@ -4,7 +4,7 @@ gunicorn
 whitenoise
 psycopg2
 pillow
-sass_processor
+
 imagekit
 datetime
 zipfile
