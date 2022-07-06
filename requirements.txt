@@ -4,6 +4,7 @@ gunicorn
 whitenoise
 psycopg2
 pillow
+django-imagekit
+django-sass-processor
 
 datetime
-zipfile
