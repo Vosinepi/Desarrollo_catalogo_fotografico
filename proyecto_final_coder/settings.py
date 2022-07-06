@@ -53,6 +53,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # apps de terceros
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "proyecto_final_coder.urls"
@@ -132,6 +135,9 @@ STATICFILES_DIRS = (os.path.join("static"),)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR + "/media/"
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
+
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 CACHES = {
@@ -151,6 +157,7 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "sass_processor.finders.CssFinder",
 ]
+
 
 # Django Sass
 STATIC_ROOT = BASE_DIR + "static"
