@@ -15,33 +15,77 @@
       href="{% static 'css/materialize.css' %}"
       media="screen,projection"
     />
-
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/perfect-scrollbar.css' %}"
+      media="screen,projection"
+    />
     {% block css %}{% endblock %}
     <!--Let browser know website is optimized for mobile-->
 
     <title>{% block tituloPagina %} {% endblock %}</title>
   </head>
   <body>
-    <nav>
-      <div class="nav-wrapper">
-        <a href="{% url 'index' %}" class="brand-logo orange-text">Fotos PRO</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="{% url 'index' %}">Inicio</a></li>
-          <li><a href="{%url 'catalogo' %}">Fotos</a></li>
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="{% url 'index' %}" class="brand-logo orange-text"
+            >Fotos PRO</a
+          >
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+            ><i class="material-icons">menu</i></a
+          >
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <div class="center row">
+                <div class="col s12">
+                  <div class="row" id="topbarsearch">
+                    <div class="input-field col s6 s12">
+                      <i class="material-icons prefix">search</i>
+                      <input
+                        type="text"
+                        id="autocomplete-input"
+                        class="autocomplete white-text"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li><a href="{% url 'index' %}">Inicio</a></li>
+            <li><a href="{%url 'catalogo' %}">Fotos</a></li>
 
-          {% if user.is_authenticated %}
-          <li><a href="{% url 'cargar_album' %}">Cargar Album</a></li>
-          <li>
-            <p class="username">Hola, {{user.username}}</p>
-          </li>
-          <li><a href="{% url 'user_logout' %}">Cerrar Sesion</a></li>
-          {% else %}
-          <li><a href="{% url 'user_login' %}">Iniciar Sesion</a></li>
-          <li><a href="{% url 'registro_usuario' %}">Registrate</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'cargar_album' %}">Cargar Album</a></li>
+            <li>
+              <p class="username">Hola, {{user.username}}</p>
+            </li>
+            <li><a href="{% url 'user_logout' %}">Cerrar Sesion</a></li>
+            {% else %}
+            <li><a href="{% url 'user_login' %}">Iniciar Sesion</a></li>
+            <li><a href="{% url 'registro_usuario' %}">Registrate</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="{% url 'index' %}">Inicio</a></li>
+      <li><a href="{%url 'catalogo' %}">Fotos</a></li>
+
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'cargar_album' %}">Cargar Album</a></li>
+      <li>
+        <p class="username">Hola, {{user.username}}</p>
+      </li>
+      <li><a href="{% url 'user_logout' %}">Cerrar Sesion</a></li>
+      {% else %}
+      <li><a href="{% url 'user_login' %}">Iniciar Sesion</a></li>
+      <li><a href="{% url 'registro_usuario' %}">Registrate</a></li>
+      {% endif %}
+    </ul>
+
     {% block contenidoPagina %} {% endblock %}
     <footer class="page-footer">
       <div class="footer-copyright">
@@ -53,10 +97,12 @@
     </footer>
     <!--JavaScript at end of body for optimized loading-->
     <script src="{% static 'material/js/jquery-2.2.0.js' %}"></script>
-    <script
-      type="text/javascript"
-      src="{% static 'js/materialize.min.js'%}"
-    ></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js'%}">
+      document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems, options);
+          });
+    </script>
     <script type="text/javascript" src="{% static 'app.js' %}"></script>
     {% block js %}{% endblock %}
   </body>
