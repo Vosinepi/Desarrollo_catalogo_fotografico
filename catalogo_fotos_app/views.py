@@ -64,7 +64,6 @@ class CargarAlbum(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         print("funcion save_model")
-
         print("validacion ok")
         album = form.save(commit=False)
         album.modified = datetime.now()
@@ -84,6 +83,7 @@ class CargarAlbum(LoginRequiredMixin, FormView):
                 img = AlbumImage()
                 img.album = album
                 img.alt = filename
+                img.tags = album.tags
                 filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
                 img.image.save(filename, contentfile)
 

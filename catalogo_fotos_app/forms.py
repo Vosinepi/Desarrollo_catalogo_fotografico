@@ -10,6 +10,9 @@ class AlbumForm(forms.ModelForm):
         model = Album
         fields = "__all__"
         exclude = []
+        # widgets = {
+        #     "slug": forms.HiddenInput()
+        # }  # para que no se muestre en el formulario pero tampoco se muestra en admin. VER ESTO
 
     zip = forms.FileField(required=False)
 

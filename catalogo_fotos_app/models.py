@@ -39,8 +39,9 @@ class AlbumImage(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
-    album = models.ForeignKey("album", on_delete=models.PROTECT)
+    album = models.ForeignKey("album", on_delete=models.CASCADE)
     alt = models.CharField(max_length=255, default=uuid.uuid4)
+    tags = models.CharField(max_length=250)
     creada = models.DateTimeField(auto_now_add=True)
     width = models.IntegerField(default=0)
     height = models.IntegerField(default=0)

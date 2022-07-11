@@ -80,11 +80,23 @@
       <li><a href="#!">Second Link</a></li>
       <li><div class="divider"></div></li>
 
-      <li><a href="{% url 'index' %}">Inicio</a></li>
-      <li><a href="{%url 'catalogo' %}">Fotos</a></li>
+      <li>
+        <a href="{% url 'index' %}"
+          ><i class="material-icons">keyboard_arrow_up</i>Inicio</a
+        >
+      </li>
+      <li>
+        <a href="{%url 'catalogo' %}"
+          ><i class="material-icons">dashboard</i>Fotos</a
+        >
+      </li>
 
       {% if user.is_authenticated %}
-      <li><a href="{% url 'cargar_album' %}">Cargar Album</a></li>
+      <li>
+        <a href="{% url 'cargar_album' %}"
+          ><i class="material-icons">add</i>Cargar Album</a
+        >
+      </li>
 
       {% endif %}
     </ul>

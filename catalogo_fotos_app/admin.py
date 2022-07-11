@@ -1,3 +1,4 @@
+from ctypes.wintypes import tagSIZE
 import os
 import uuid
 import zipfile
@@ -44,6 +45,7 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
                     img = AlbumImage()
                     img.album = album
                     img.alt = filename
+                    img.tags = album.tags
                     filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
                     img.image.save(filename, contentfile)
 
