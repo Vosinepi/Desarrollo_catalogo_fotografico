@@ -152,6 +152,13 @@ def register_user(request):
     return render(request, "registro_usuario.html", {"form": form})
 
 
+def eliminar_foto(request, id):
+    foto = AlbumImage.objects.get(id=id)
+    foto.delete()
+
+    return redirect("album", slug=foto.album.slug)
+
+
 # vista base
 def base(request):
     return render(request, "template_base.html")

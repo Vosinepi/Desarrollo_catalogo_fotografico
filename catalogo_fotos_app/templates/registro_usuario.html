@@ -4,8 +4,9 @@ Registro {% endblock %} {% block contenidoPagina %}
 <main>
   <div class="container">
     <h3 class="center-align pink-text lighten-4 panel-heading">Registrate</h3>
-    <div class="row">
-      <form class="col s12" action="{% url 'registro_usuario' %}" method="POST">
+    
+      <div class="row">
+        <form class="col s12" action="{% url 'registro_usuario' %}" method="POST">
         {% csrf_token %}
         <div class="row">
           <div class="col s12">
@@ -110,7 +111,8 @@ Registro {% endblock %} {% block contenidoPagina %}
                 <a href="{% url 'user_login' %}">o Inicia sesion</a>
               </div>
           </form>
-    </div>
+      </div>
+    
   </div>
 </main>
 

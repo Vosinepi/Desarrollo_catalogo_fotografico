@@ -70,14 +70,29 @@
             ><span class="white-text name">{{user.username}}</span></a
           >
           <a href="#email"
-            ><span class="white-text email">jdandturk@gmail.com</span></a
+            ><span class="white-text email">{{user.email}}</span></a
           >
         </div>
       </li>
+      {% if user.is_authenticated %}
+
       <li>
-        <a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a>
+        <a class="sesion_sidenav" href="{% url 'user_logout' %}"
+          >Cerrar Sesion</a
+        >
       </li>
-      <li><a href="#!">Second Link</a></li>
+      {% else %}
+      <li>
+        <a class="sesion_sidenav" href="{% url 'user_login' %}"
+          ><i class="material-icons">account_circle</i>Iniciar Sesion</a
+        >
+      </li>
+      <li>
+        <a class="sesion_sidenav" href="{% url 'registro_usuario' %}"
+          ><i class="material-icons">account_box</i>Registrate</a
+        >
+      </li>
+      {% endif %}
       <li><div class="divider"></div></li>
 
       <li>

@@ -46,3 +46,12 @@ class AlbumImage(models.Model):
     width = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
     slug = models.SlugField(max_length=70, default=uuid.uuid4, editable=False)
+
+
+# class Carrito(models.Model):
+#     usuario = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+#     producto = models.ForeignKey("AlbumImage", on_delete=models.CASCADE)
+#     cantidad = models.IntegerField(default=1)
+#     creada = models.DateTimeField(auto_now_add=True)
+#     modificada = models.DateTimeField(auto_now_add=True)
+#     slug = models.SlugField(max_length=70, default=uuid.uuid4, editable=False)
