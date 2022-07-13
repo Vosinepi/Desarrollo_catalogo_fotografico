@@ -22,7 +22,7 @@ from .forms import AlbumForm
 class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
     form = AlbumForm
     prepopulated_fields = {"slug": ("titulo",)}
-    list_display = ("titulo", "thumb")
+    list_display = ("titulo", "thumb", "is_visible")
     list_filter = ("creada",)
 
     def save_model(self, request, obj, form, change):
@@ -63,5 +63,5 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
 
 @admin.register(AlbumImage)
 class AlbumImageModelAdmin(admin.ModelAdmin):
-    list_display = ("alt", "album")
+    list_display = ("alt", "album", "tags")
     list_filter = ("album", "creada")

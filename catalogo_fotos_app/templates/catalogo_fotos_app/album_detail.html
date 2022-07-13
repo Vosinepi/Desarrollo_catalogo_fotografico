@@ -128,7 +128,9 @@ media="screen,projection"
 
         </div>
 {% else %}
-<h3>This album is temporarily unavailable.</h3>
+<main>
+<h3 class="center-align pink-text lighten-4">Este album esta vacio.</h3>
+</main>
 {% endif %}
 
 {% endblock %}
@@ -140,7 +142,7 @@ media="screen,projection"
 <script src="{% static 'external/photoswipe/photoswipe-ui-default.min.js' %}"></script>
 <script>
     $("#basicExample").justifiedGallery({
-        rowHeight: 150,
+        rowHeight: 250,
         thumbnailPath: function (currentPath, width, height, image) {
           if (Math.max(width, height) < 250) {
             return currentPath.replace(/(.*)(_[a-z]+)(\..*)/, "$1_small$2");

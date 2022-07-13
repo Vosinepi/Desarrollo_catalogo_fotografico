@@ -6960,7 +6960,7 @@ textarea.materialize-textarea {
 
 [type="checkbox"] + span:not(.lever) {
   position: relative;
-  padding-left: 35px;
+  padding-left: 42px;
   cursor: pointer;
   display: inline-block;
   height: 25px;
@@ -6986,6 +6986,7 @@ textarea.materialize-textarea {
   margin-top: 3px;
   -webkit-transition: .2s;
   transition: .2s;
+  margin-left: 6px;
 }
 
 [type="checkbox"]:not(.filled-in) + span:not(.lever):after {

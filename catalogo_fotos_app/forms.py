@@ -10,9 +10,16 @@ class AlbumForm(forms.ModelForm):
         model = Album
         fields = "__all__"
         exclude = []
-        # widgets = {
-        #     "slug": forms.HiddenInput()
-        # }  # para que no se muestre en el formulario pero tampoco se muestra en admin. VER ESTO
+        widgets = {
+            "descripcion": forms.Textarea(attrs={"class": "materialize-textarea"}),
+            # "titulo": forms.TextInput(
+            #     attrs={"class": "vTextField", "id": "id_titulo titulo_copiar"}
+            # ),
+            # "slug": forms.TextInput(
+            #     attrs={"class": "vTextField", "id": "id_slug slug_copiar"}
+            # ),
+            # "slug": forms.HiddenInput()
+        }  # para que no se muestre en el formulario pero tampoco se muestra en admin. VER ESTO
 
     zip = forms.FileField(required=False)
 

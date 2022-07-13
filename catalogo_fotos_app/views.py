@@ -48,11 +48,15 @@ class AlbumDetail(DetailView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(AlbumDetail, self).get_context_data(**kwargs)
-
+        print(context)
         # Add in a QuerySet of all the images
         context["images"] = AlbumImage.objects.filter(album=self.object.id)
-        print(context["images"][0].album.slug)
-        return context
+        print(len(context["images"]))
+        if len(context["images"]) == 0:
+            return None
+        else:
+            print(context["images"][0].album.slug)
+            return context
 
 
 # carga de albumes por app
@@ -60,7 +64,9 @@ class CargarAlbum(LoginRequiredMixin, FormView):
     model = Album
     template_name = "cargar_album.html"
     form_class = AlbumForm
+    prepopulated_fields = {"slug": ("titulo",)}
     success_url = "exito"
+    print("cargar album")
 
     def form_valid(self, form):
         print("funcion save_model")

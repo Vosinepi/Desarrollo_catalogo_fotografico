@@ -3,23 +3,74 @@ Login {% endblock %} {% block contenidoPagina %}
 
 <main>
   <h3 class="center-align pink-text lighten-4 panel-heading">Cargar album</h3>
-  <div class="container">
-    <div name="formulario" class="formulario">
-      <! agregar def en la view>
-      {% if mensaje %}
-      <div class="alert alert-info">{{ mensaje }}</div>
+  <div id="login-page" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row"></div>
+        <div class="row">
+          <div class="input-field col s12">
+            {{form.titulo}}
+            <label>Titulo de Album</label>
+          </div>
+          <div class="input-field col s12">
+            {{form.descripcion}}
+            <label for="textarea1">Descripcion</label>
+          </div>
+          <div class="file-field input-field col s12">
+            <div class="btn">
+              <span>Miniatura</span>
+              {{form.thumb}}
+            </div>
+            <div class="file-path-wrapper">
+              <input class="validate file-path validate" type="text" />
+            </div>
+          </div>
+          <div class="input-field col s12">
+            {{form.tags}}
+            <label for="titulo">Etiquetas</label>
+          </div>
+          <label class="input-field col s12">
+            {{ form.is_visible}}
+            <span for="remember-me">Visible</span>
+          </label>
+          <div class="col s12">
+            <label>Slug</label>
+            {{form.slug}}
+          </div>
+          <div class="file-field input-field col s12">
+            <div class="btn">
+              <span>Zip</span>
+              {{form.zip}}
+            </div>
+            <div class="file-path-wrapper">
+              <input class="validate file-path validate" type="text" />
+            </div>
+          </div>
 
-      {% endif %}
-      <form
-        class="panel panel-default"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        {% csrf_token %} {{ form.as_p }}
-        <input type="submit" value="Guardar" />
+          <div class="input-field col s12">
+            <button
+              type="submit"
+              value="submit"
+              class="btn waves-effect waves-light col s12"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
 </main>
 
-{% endblock %}
+{% endblock %} {% block js %}
+<script>
+  $('#id_titulo').keyup(function () {
+    var titulo = $('#id_titulo').val();
+
+    var slug = titulo.replace(/ /g, '-');
+
+    $('#id_slug').val(slug);
+  });
+</script>
+{% endblock %} {% block footer %} {% endblock %}
