@@ -46,6 +46,7 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
                     img.album = album
                     img.alt = filename
                     img.tags = album.tags
+                    img.album_titulo = album.titulo
                     filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
                     img.image.save(filename, contentfile)
 
@@ -65,3 +66,4 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
 class AlbumImageModelAdmin(admin.ModelAdmin):
     list_display = ("alt", "album", "tags")
     list_filter = ("album", "creada")
+    search_fields = ("alt", "tags")

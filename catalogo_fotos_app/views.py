@@ -1,3 +1,5 @@
+from atexit import register
+from msilib.schema import ListView
 from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.core.paginator import (
@@ -10,7 +12,7 @@ from django.views.generic import DetailView, DeleteView, FormView, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 from django.contrib import messages
 
 from .forms import *
@@ -90,6 +92,7 @@ class CargarAlbum(LoginRequiredMixin, FormView):
                 img.album = album
                 img.alt = filename
                 img.tags = album.tags
+                img.album_titulo = album.titulo
                 filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
                 img.image.save(filename, contentfile)
 
@@ -176,3 +179,56 @@ class Registro_usuario(TemplateView):
 
 def terminos_condiciones(request):
     return render(request, "terminos_y_condiciones.html")
+
+
+class Busqueda_fotos(TemplateView):
+    template_name = "buscador.html"
+
+
+# class Buscador(ListView):
+
+#     model = Album
+
+#     # template_name = "buscador.html"
+#     # paginate_by = 10
+
+#     # def get_queryset(self, *args, **kwargs):
+#     #     query = self.request.GET.get("q")
+#     #     if query:
+#     #         return Album.objects.filter(
+#     #             Q(alt__icontains=query) | Q(tags__icontains=query)
+#     #         )
+#     #     return Album.objects.all()
+
+
+def busqueda(request):
+
+    buscar_foto = request.GET.get("busqueda")
+    album = Album.objects.all()
+
+    if buscar_foto:
+        print("buscar foto")
+        fotos = AlbumImage.objects.filter(
+            Q(alt__icontains=buscar_foto) | Q(tags__icontains=buscar_foto)
+        )
+
+    else:
+        fotos = AlbumImage.objects.all()
+    titulos_albumes = []
+    slug_albumes = []
+
+    for foto in fotos:
+
+        titulos_albumes.append(
+            foto.album_titulo
+        ) if foto.album_titulo not in titulos_albumes else titulos_albumes
+    for titulo in album:
+        slug_albumes.append(
+            titulo.slug
+        ) if titulo.slug not in slug_albumes else slug_albumes
+    titulos_albumes.sort()
+    slug_albumes.sort()
+    res = dict(zip(titulos_albumes, slug_albumes))
+    print(res)
+
+    return render(request, "buscador.html", {"fotos": fotos, "titulos_albumes": res})

@@ -33,6 +33,7 @@ urlpatterns = [
     path("cargar_album/", views.CargarAlbum.as_view(), name="cargar_album"),
     path("registro_usuario/", views.register_user, name="registro_usuario"),
     path("eliminar-foto/<int:id>/", views.eliminar_foto, name="eliminar_foto"),
+    re_path("buscador/", views.busqueda, name="buscador"),
     re_path("login/", views.user_login, name="user_login"),
     path("logout/", views.logOut, name="user_logout"),
     path("terminos.html", views.terminos_condiciones, name="terminos"),
