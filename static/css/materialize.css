@@ -11,6 +11,11 @@ body {
   min-height: 100vh;
   flex-direction: column;
   background-color: #B2DFDB;
+  background-image: url("../images/ailbhe-flynn-477677-unsplash.webp");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 main {
@@ -21,6 +26,20 @@ main {
   width: 500px;
 }
 
+
+
+.index_titulo { 
+    height: 200px;
+    padding: 80px;
+    text-shadow: #111 0px 0px 10px;
+  
+}
+
+.titulo-secciones .titulo-album{
+  color: #fff;
+  padding: 15px;
+  text-shadow: #111 0px 0px 10px;
+}
 .username { 
   font-size: 1rem;
   color: #fff;
@@ -34,6 +53,18 @@ main {
   margin-top: 8px;
   margin-right: 8px;
    
+}
+.card-index {
+  font-size: 2rem;
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+.boton-index {
+  margin: 15px 0px 7px 0px;
+  margin-top: 15px;
+  text-align: center;
+  width: 200px;
 }
 
 .materialize-red {
@@ -4691,6 +4722,26 @@ small {
   }
 }
 
+@media (max-width: 500px) {
+  .boton-index {
+  width: 100px !important;
+  padding: 0px !important;
+  }
+  .icono-index {
+  display: none;
+  }
+  .row {
+    width: 100%;
+  }
+  .row .col.s6 {
+    display: flex;
+    margin-left: 25%;
+    left: auto;
+    right: auto;
+    width: 100%;
+}
+}
+
 @media only screen and (min-width: 390px) {
   .flow-text {
     font-size: 1.224rem;
@@ -4815,6 +4866,7 @@ small {
   .flow-text {
     font-size: 1.2rem;
   }
+  
 }
 
 .scale-transition {

@@ -41,11 +41,13 @@
     {% for titulo, slug in titulos_albumes.items%}
 
     <ul>
-      <a
-        href="{% url 'album' slug %}"
-        class="center-align orange-text lighten-4"
-        >{{ titulo }}</a
-      >
+      <li>
+        <a
+          href="{% url 'album' slug %}"
+          class="center-align orange-text lighten-4"
+          >{{ titulo }}</a
+        >
+      </li>
     </ul>
     {% endfor %}
 

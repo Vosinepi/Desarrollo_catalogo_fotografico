@@ -2,7 +2,41 @@
 inicio {% endblock %} {% block contenidoPagina %}
 
 <main>
-  <h1 class="center-align pink-text lighten-4">Fotos PRO</h1>
+  <div class="container center">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="index_titulo center-align white-text lighten-4">
+          Fotos PRO
+        </h1>
+      </div>
+
+      <div class="col s6 offset-s3 center">
+        <div class="card small blue-grey darken-1 card-index">
+          <div class="card-content white-text">
+            <ul>
+              <li>
+                <a
+                  href="{%url 'catalogo' %}"
+                  class="boton-index waves-effect waves-light btn-large"
+                  ><i class="icono-index material-icons left orange-text"
+                    >dashboard</i
+                  >Fotos</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'cargar_album' %}"
+                  class="boton-index waves-effect waves-light btn-large"
+                  ><i class="icono-index material-icons left orange-text">add</i
+                  >Cargar</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
 {% endblock %}
