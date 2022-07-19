@@ -14,10 +14,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import dj_database_url
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+LOGIN_REDIRECT_URL = "index"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -39,9 +40,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
     # app terceros
     "sass_processor",
     "imagekit",
+    # app propias
     "catalogo_fotos_app",
 ]
 
@@ -121,6 +124,7 @@ USE_TZ = True
 
 DATE_INPUT_FORMATS = ["%d-%m-%Y"]
 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 
 # Static files (CSS, JavaScript, Images)
 
@@ -154,3 +158,12 @@ STATICFILES_FINDERS = [
 STATIC_ROOT = BASE_DIR + "static"
 
 SASS_PROCESSOR_ROOT = STATIC_ROOT
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "laimas@gmail.com"
+EMAIL_HOST_PASSWORD = ""
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = "default from email"

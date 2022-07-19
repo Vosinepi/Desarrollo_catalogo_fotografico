@@ -1,0 +1,25 @@
+{% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
+Reseteo Contraseña {% endblock %} {% block contenidoPagina %}
+
+<main>
+  <!--Password reset sent-->
+
+  <div id="form-card" class="row">
+    <h3 class="center-align titulo-secciones lighten-4 panel-heading">
+      Reseteo de contraseña enviado.
+    </h3>
+    <div class="col s12 z-depth-6 card-panel">
+      <div class="row"></div>
+      <p>
+        Te enviamos un correo con las instrucciones para cambiar tu contraseña,
+        si la cuenta existe con el correo que ingresaste. Te llegara un correo
+        en poco tiempo.<br />
+        Si no recibes un correo, por favor asegurate de que ingresaste el mail
+        con el que te registraste, y verifica tu carpeta de spam.
+      </p>
+      <div class="row"></div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

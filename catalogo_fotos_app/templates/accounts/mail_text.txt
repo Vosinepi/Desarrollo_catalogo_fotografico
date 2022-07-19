@@ -1,0 +1,17 @@
+{% autoescape off %}
+Hola,
+
+Recibimos la solicitud para restablecer la contraseña de tu cuenta. Hace click en el enlace de abajo. 
+
+{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+
+Este enlace solo puede usarse una vez. Si necesitas restablecer tu contraseña de nuevo, por favor visita {{ protocol }}://{{domain}} y solicita otro restablecimiento.
+
+Si no solicitaste restablecer tu contraseña, puedes ignorar este correo.
+
+
+Sinceramente,
+Fotos Pro
+
+{% endautoescape %}

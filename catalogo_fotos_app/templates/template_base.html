@@ -66,6 +66,7 @@
         </ul>
       </nav>
     </div>
+    {% include 'includes/message.html' %}
     <ul id="slide-out" class="sidenav">
       <li>
         <div class="user-view">
@@ -77,7 +78,7 @@
               class="circle"
               src="https://materializecss.com/images/office.jpg"
           /></a>
-          <a><span class="white-text name">{{user.username}}</span></a>
+          <a href="{%url "user" %}"><span class="white-text name">{{user.username}}</span></a>
           <a><span class="white-text email">{{user.email}}</span></a>
         </div>
       </li>
@@ -111,7 +112,11 @@
           ><i class="material-icons">dashboard</i>Fotos</a
         >
       </li>
-
+      <li>
+        <a href="{%url 'contacto' %}"
+          ><i class="material-icons">email</i>Contacto</a
+        >
+      </li>
       {% if user.is_authenticated %}
       <li>
         <a href="{% url 'cargar_album' %}"
@@ -135,14 +140,22 @@
 
     <script src="{% static 'material/js/jquery-2.2.0.js' %}"></script>
     <script type="text/javascript" src="{% static 'app.js' %}"></script>
+
     <script type="text/javascript" src="{% static 'js/materialize.min.js'%}">
+
 
       document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems, options);
           });
     </script>
-
+    <script>
+      $('#alert_close').click(function(){
+        $( "#alert_box" ).fadeOut( "slow", function() {
+        });
+      });
+    </script>
+    
     {% block js %}{% endblock %}
   </body>
 </html>

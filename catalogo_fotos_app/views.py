@@ -1,7 +1,7 @@
 from atexit import register
 from msilib.schema import ListView
 from django.shortcuts import render, redirect
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.core.paginator import (
     Paginator,
     EmptyPage,
@@ -10,9 +10,17 @@ from django.core.paginator import (
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, DeleteView, FormView, TemplateView
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail, BadHeaderError
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
 from django.contrib import messages
 
 from .forms import *
@@ -113,28 +121,68 @@ def subida_exitosa(request):
 
 
 # inicio de sesion
-def user_login(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect("index")
-            else:
-                return render(request, "login.html", {"form": form})
-    form = AuthenticationForm()
-    return render(request, "login.html", {"form": form})
+# def user_login(request, auth_form=LoginForm):
+
+#     if request.method == "POST":
+#         print("post valido")
+#         form = auth_form(request.POST)
+#         if form.is_valid():
+#             print("valido")
+#             username = form.cleaned_data.get("username")
+#             password = form.cleaned_data.get("password")
+
+#             if not form.cleaned_data.get("remember_me"):
+#                 request.session.set_expiry(0)
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 # cierra la sesión
+#                 return redirect("index")
+#             else:
+#                 return render(request, "login.html", {"form": form})
+#         else:
+#             print("auth no valido")
+#             return render(request, "login.html", {"form": form})
+#     form = LoginForm()
+#     return render(request, "login.html", {"form": form})
+
+
+class User_Login(LoginView):
+    template_name = "accounts/login.html"
+    form_class = LoginForm
+    redirect_authenticated_user = True
+    print("login")
+
+    class User_Login(LoginView):
+        form_class = LoginForm
+
+        def form_valid(self, form):
+
+            remember_me = form.cleaned_data[
+                "remember_me"
+            ]  # get remember me data from cleaned_data of form
+            if not remember_me:
+                print("expira cuando se cierre navegador")
+                self.request.session.set_expiry(0)  # if remember me is
+                self.request.session.modified = True
+            return super(User_Login, self).form_valid(form)
 
 
 def logOut(request):
     logout(request)
-    return redirect("index")
+    return redirect("user_login")
 
 
+# registro usuarios
 def register_user(request):
+    """
+    Si el método de solicitud es POST, valide el formulario, si el formulario es válido, guarde el
+    formulario, si el formulario no es válido, imprima "no valido" y devuelva el formulario
+
+    :param request: El objeto de solicitud es un objeto Django que contiene metadatos sobre la solicitud
+    actual
+    :return: El formulario está siendo devuelto.
+    """
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -156,11 +204,60 @@ def register_user(request):
             messages.error(request, "Error al procesar solicitud")
 
         print("no valido")
-        return render(request, "registro_usuario.html", {"form": form})
+        return render(request, "accounts/registro_usuario.html", {"form": form})
     form = UserRegisterForm()
-    return render(request, "registro_usuario.html", {"form": form})
+
+    return render(request, "accounts/registro_usuario.html", {"form": form})
 
 
+def password_reset(request):
+    if request.method == "POST":
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data["email"]
+            user = User.objects.filter(Q(email=data))
+            if user.exists():
+                for user in user:
+                    subject = "Recuperar contraseña"
+                    email_template = "accounts/mail_text.txt"
+                    c = {
+                        "email": user.email,
+                        "domain": "127.0.0.1:8000",
+                        "site_name": "Fotos PRO",
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        "token": default_token_generator.make_token(user),
+                        "protocol": "http",
+                    }
+                    email = render_to_string(email_template, c)
+                    recipient_list = [settings.EMAIL_HOST_USER]
+                    try:
+                        send_mail(
+                            subject,
+                            email,
+                            user.email,
+                            recipient_list,
+                            fail_silently=False,
+                        )
+                    except BadHeaderError:
+                        return HttpResponse("Invalid header found.")
+                    messages.success(
+                        request,
+                        "Un mensaje con las instrucciones para el reseteo de su contraseña fue enviado a su casilla de correo.",
+                    )
+                    return redirect("index")
+            messages.error(request, "No existe un usuario con ese correo electrónico.")
+
+    form = PasswordResetForm()
+    return render(request, "accounts/password_reset.html", {"form": form})
+
+
+@login_required
+def perfil(request):
+    return render(request, "accounts/user.html")
+
+
+# eliminar fotos desde vita detalle
 def eliminar_foto(request, id):
     foto = AlbumImage.objects.get(id=id)
     foto.delete()
@@ -173,35 +270,17 @@ def base(request):
     return render(request, "template_base.html")
 
 
-class Registro_usuario(TemplateView):
-    template_name = "registro_usuario.html"
-
-
-def terminos_condiciones(request):
+def terminos_condiciones(request):  # vista de terminos y condiciones
     return render(request, "terminos_y_condiciones.html")
 
 
-class Busqueda_fotos(TemplateView):
-    template_name = "buscador.html"
-
-
-# class Buscador(ListView):
-
-#     model = Album
-
-#     # template_name = "buscador.html"
-#     # paginate_by = 10
-
-#     # def get_queryset(self, *args, **kwargs):
-#     #     query = self.request.GET.get("q")
-#     #     if query:
-#     #         return Album.objects.filter(
-#     #             Q(alt__icontains=query) | Q(tags__icontains=query)
-#     #         )
-#     #     return Album.objects.all()
-
-
+# buscador
 def busqueda(request):
+    """
+    Retorna una lista de fotos que coincidan con el criterio de busqueda.
+    Tambien retorna los albumes a los que pertenecen las fotos y el slug para
+    generar los enlaces a los mismos.
+    """
 
     buscar_foto = request.GET.get("busqueda")
     album = Album.objects.all()
@@ -232,3 +311,33 @@ def busqueda(request):
     print(res)
 
     return render(request, "buscador.html", {"fotos": fotos, "titulos_albumes": res})
+
+
+def contacto(request):
+    form = Contactos()
+
+    if request.method == "POST":
+        form = Contactos(request.POST)
+        if form.is_valid():
+            print("form validado")
+            nombre = form.cleaned_data.get("nombre")
+            apellido = form.cleaned_data.get("apellido")
+            email = form.cleaned_data.get("email")
+            subject = form.cleaned_data.get("subject")
+            menssage = form.cleaned_data.get("message")
+
+            form.save()
+            recipient_list = [settings.EMAIL_HOST_USER]
+            mensaje = f"Nombre: {nombre}\n Apellido: {apellido}\nEmail: {email}\nAsunto: {subject}\nMensaje: {menssage}"
+
+            send_mail(subject, mensaje, email, recipient_list)
+
+            return render(request, "gracias.html")
+    else:
+        form = Contactos()
+
+    return render(request, "contacto.html", {"form": form})
+
+
+# def carrito(request):
+#     return render(request, "carrito.html")

@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 import catalogo_fotos_app.views as views
 
@@ -34,7 +35,36 @@ urlpatterns = [
     path("registro_usuario/", views.register_user, name="registro_usuario"),
     path("eliminar-foto/<int:id>/", views.eliminar_foto, name="eliminar_foto"),
     re_path("buscador/", views.busqueda, name="buscador"),
-    re_path("login/", views.user_login, name="user_login"),
+    re_path("contacto/", views.contacto, name="contacto"),
+    re_path(
+        "login/",
+        views.User_Login.as_view(),
+        name="user_login",
+    ),
     path("logout/", views.logOut, name="user_logout"),
+    path("perfil/", views.perfil, name="user"),
     path("terminos.html", views.terminos_condiciones, name="terminos"),
+    # path("accounts/", include("django.contrib.auth.urls")),
+    path("password_reset/", views.password_reset, name="password_reset"),
+    path(
+        "password_reset/done/",
+        auth_views.PasswordResetDoneView.as_view(
+            template_name="accounts/reset_done.html"
+        ),
+        name="password_reset_done",
+    ),
+    path(
+        "reset/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name="accounts/password_reset_confirm.html"
+        ),
+        name="password_reset_confirm",
+    ),
+    path(
+        "reset/done/",
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name="accounts/password_reset_complete.html"
+        ),
+        name="password_reset_complete",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

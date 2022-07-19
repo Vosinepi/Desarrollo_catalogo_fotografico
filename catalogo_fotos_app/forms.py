@@ -1,10 +1,10 @@
 from django import forms
-from .models import Album
-from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from catalogo_fotos_app.models import *
 
-
+# formulario carga album
 class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
@@ -24,11 +24,12 @@ class AlbumForm(forms.ModelForm):
     zip = forms.FileField(required=False)
 
 
+# formulario registro users admin?
 class UserRegisterForm(UserCreationForm):
-    name = forms.CharField(
+    first_name = forms.CharField(
         label="Nombre",
         max_length=30,
-        required=False,
+        required=True,
         help_text="Ingresa tu nombre",
         widget=forms.TextInput(
             attrs={
@@ -38,7 +39,7 @@ class UserRegisterForm(UserCreationForm):
     )
     last_name = forms.CharField(
         max_length=30,
-        required=False,
+        required=True,
         help_text="Ingresa tu apellido",
         widget=forms.TextInput(
             attrs={
@@ -100,7 +101,7 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = [
-            "name",
+            "first_name",
             "last_name",
             "username",
             "email",
@@ -108,3 +109,34 @@ class UserRegisterForm(UserCreationForm):
             "password2",
         ]
         help_texts = {k: "" for k in fields}
+
+
+class LoginForm(AuthenticationForm):
+    remember_me = forms.BooleanField(
+        label=("remember_me"), initial=False, required=False
+    )
+
+
+# formnulario de contacto
+class Contactos(forms.ModelForm):
+    class Meta:
+        model = Contacto
+        fields = "__all__"
+        exclude = []
+        widgets = {
+            "nombre": forms.TextInput(
+                attrs={"class": "form-control input-field col s12", "id": "id_nombre"}
+            ),
+            "apellido": forms.TextInput(
+                attrs={"class": "form-control input-field col s12", "id": "id_apellido"}
+            ),
+            "email": forms.TextInput(
+                attrs={"class": "form-control input-field col s12", "id": "id_email"}
+            ),
+            "subject": forms.TextInput(
+                attrs={"class": "form-control input-field col s12", "id": "id_subject"}
+            ),
+            "message": forms.Textarea(
+                attrs={"class": "form-control input-field col s12", "id": "id_message"}
+            ),
+        }

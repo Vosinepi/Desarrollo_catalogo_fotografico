@@ -3,46 +3,40 @@ Login {% endblock %} {% block contenidoPagina %}
 
 <main>
   <div class="container">
-    <h3 class="center-align pink-text lighten-4 panel-heading">
+    <h3 class="center-align titulo-secciones lighten-4 panel-heading">
       Iniciar Sesion
     </h3>
-    <div id="login-page" class="row">
+    <div id="form-card" class="row">
       <div class="col s12 z-depth-6 card-panel">
         <form class="login-form" action="{% url 'user_login' %}" method="post">
           <div class="row"></div>
           {% csrf_token %}
           <div class="row">
-            {% if error_message %}
-            <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+            {% if form.non_field_errors %}
+            <ul class="form-errors">
+              {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
             {% endif %}
 
             <div class="row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">account_circle</i>
-                <input
-                  name="username"
-                  id="username"
-                  type="text"
-                  class="validate"
-                />
+                {{ form.username }}
                 <label class="validate" for="username">Usuario</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">lock_outline</i>
-                <input
-                  name="password"
-                  id="password"
-                  type="password"
-                  class="validate"
-                />
+                {{ form.password }}
                 <label class="validate" for="password">Contraseña</label>
               </div>
             </div>
             <div class="row">
               <label class="input-field col s12">
-                <input type="checkbox" id="remember-me" />
+                <input name="remember_me" type="checkbox" id="remember-me" />
                 <span for="remember-me">Recordarme</span>
               </label>
             </div>
@@ -64,7 +58,7 @@ Login {% endblock %} {% block contenidoPagina %}
               </div>
               <div class="input-field col s6 m6 l6">
                 <p class="margin right-align medium-small">
-                  <a href="#">Forgot password?</a>
+                  <a href="{% url "password_reset" %}">Olvidaste tu contraseña?</a>
                 </p>
               </div>
             </div>

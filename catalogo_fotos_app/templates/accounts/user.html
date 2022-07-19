@@ -1,0 +1,12 @@
+{% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
+inicio {% endblock %} {% block contenidoPagina %}
+
+<main>
+  <div class="row my-3 p-3">
+    <h3 class="center-align titulo-secciones lighten-4 panel-heading">
+      Este es el perfil de {{user.username}}
+    </h3>
+  </div>
+</main>
+
+{% endblock %}

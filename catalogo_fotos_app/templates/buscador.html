@@ -18,13 +18,13 @@
 
 {% endblock %} {% block contenidoPagina %}
 <main>
-  <h1 class="center-align pink-text lighten-4">Busqueda</h1>
+  <h1 class="center-align titulo-secciones lighten-4">Busqueda</h1>
 
   <article class="row" style="width: 80%">
     <form class="buscador" action="{% url 'buscador' %}" method="GET">
       <div class="row" id="topbarsearch">
         <div class="input-field col s6 s12">
-          <i class="material-icons prefix">search</i>
+          <i class="material-icons prefix white-text">search</i>
           <input
             type="text"
             id="autocomplete-input"
@@ -36,7 +36,7 @@
     </form>
 
     {% if fotos %}
-    <h5 class="center-align pink-text lighten-4">Albumes</h5>
+    <h5 class="center-align titulo-secciones lighten-4">Albumes</h5>
 
     {% for titulo, slug in titulos_albumes.items%}
 

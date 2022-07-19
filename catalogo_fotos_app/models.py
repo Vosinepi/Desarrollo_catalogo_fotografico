@@ -62,3 +62,16 @@ class AlbumImage(models.Model):
 #     creada = models.DateTimeField(auto_now_add=True)
 #     modificada = models.DateTimeField(auto_now_add=True)
 #     slug = models.SlugField(max_length=70, default=uuid.uuid4, editable=False)
+
+
+class Contacto(models.Model):
+    nombre = models.CharField(max_length=70)
+    apellido = models.CharField(max_length=70)
+    email = models.EmailField()
+    subject = models.CharField(max_length=70)
+    menssage = models.TextField(max_length=1024)
+    creada = models.DateTimeField(auto_now_add=True)
+    modificada = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.nombre

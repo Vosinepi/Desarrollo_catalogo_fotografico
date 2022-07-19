@@ -1,0 +1,47 @@
+{% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
+Contacto {% endblock %} {% block contenidoPagina %}
+
+<main>
+  <h3 class="center-align titulo-secciones panel-heading">Escribinos</h3>
+  <div id="form-card" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+      <form method="POST" action="{% url 'contacto' %}">
+        {% csrf_token %}
+        <div class="row"></div>
+        <div class="row">
+          <div class="input-field col s6">
+            {{form.nombre}} {{form.nombre.errors}}
+            <label>Nombre</label>
+          </div>
+          <div class="input-field col s6">
+            {{form.apellido}} {{form.apellido.errors}}
+            <label>Apellido</label>
+          </div>
+          <div class="input-field col s12">
+            {{form.email}} {{form.email.help_text}} {{form.email.errors}}
+            <label>Email</label>
+          </div>
+          <div class="input-field col s6">
+            {{form.subject}} {{form.subject.errors}}
+            <label>Asunto</label>
+          </div>
+          <div class="materialize-textarea col s12">
+            <label>Mensaje</label>
+            {{form.menssage}} {{form.menssage.errors}}
+          </div>
+          <div class="input-field col s12">
+            <button
+              type="submit"
+              value="submit"
+              class="btn waves-effect waves-light col s12"
+            >
+              Enviar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+{% endblock %} {% block js %} {% endblock %} {% block footer %} {% endblock %}

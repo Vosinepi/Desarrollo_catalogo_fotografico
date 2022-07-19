@@ -4,35 +4,27 @@ Registro {% endblock %} {% block contenidoPagina %}
 <main>
   <div class="container">
     <h3 class="center-align pink-text lighten-4 panel-heading">Registrate</h3>
-    
+    <div id="form-card" class="row">
+      <div class="col s12 z-depth-6 card-panel">
       <div class="row">
         <form class="col s12" action="{% url 'registro_usuario' %}" method="POST">
         {% csrf_token %}
+        <div class="row"></div>
         <div class="row">
           <div class="col s12">
-            {% if form.errors %} {% for field in form %} {% for error in
-            field.errors %}
-              <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-                <strong>{{ field|escape }}</strong>
-              </div>
-            {% endfor %} {% else %} {% for error in form.non_field_errors %}
-              <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-              </div>
-            {% endfor %} {% endif %}
+            
               <div class="col s6">
                 <div class="form-group position-relative input-field">
                 <label>Nombre <span class="text-danger">*</span></label>
-                {{form.name}}
+                {{form.first_name}}
                 </div>
               {% if form.first_name.errors %}
               {% for error in form.first_name.errors %}
                 <div class="alert alert-danger">
                   <strong>{{ error|escape }}</strong>
                 </div>
-                {% endfor %}
-                {% endif %}
+              {% endfor %}
+              {% endif %}
               </div>
                 <div class="col s6">
                     <div class="form-group position-relative input-field">
@@ -100,19 +92,23 @@ Registro {% endblock %} {% block contenidoPagina %}
                   {% endif %}
                 </div>
               
-              <div class="col s6">
-                <input
+              <div class="input-field col s12">
+                <button
                   name="Registrate"
                   type="submit"
                   value="Registrate"
-                  class="btn btn-success"
-                />
+                  class="btn waves-effect waves-light col s12">
+                  Registrate
+                </button>
                 &nbsp;
+                <div>
                 <a href="{% url 'user_login' %}">o Inicia sesion</a>
+                </div>
               </div>
           </form>
       </div>
-    
+    </div>
+    </div>
   </div>
 </main>
 

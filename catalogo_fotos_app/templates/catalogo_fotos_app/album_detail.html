@@ -17,7 +17,7 @@ media="screen,projection"
     
 
 {% block contenidoPagina %}
-
+<main>
 {% if album.is_visible %}
 
 
@@ -52,10 +52,10 @@ media="screen,projection"
         
 
     
-    <footer class="col s12 m12 l10 offset-l1">
+    <div class="col s12 m12 l10 offset-l1 white-text">
         Creado el <time datetime="{{ album.creada|date:"Y-m-d" }}">{{ album.creada|date:"d M Y" }}</time>
         <p>Tags: {{ album.tags }}</p>
-    </footer>
+    </div>
 </article>
 <!-- PhotoSwipe -->
         <!-- Root element of PhotoSwipe. Must have class pswp. -->
@@ -128,11 +128,12 @@ media="screen,projection"
 
         </div>
 {% else %}
-<main>
-<h3 class="center-align pink-text lighten-4">Este album esta vacio.</h3>
-</main>
-{% endif %}
 
+<h3 class="center-align titulo-seccion lighten-4">Este album esta vacio.</h3>
+
+
+{% endif %}
+</main>
 {% endblock %}
 
 {% block js %}
@@ -167,3 +168,4 @@ media="screen,projection"
 
 
 {% endblock %}
+{% block footer %} {% endblock %}
