@@ -160,7 +160,7 @@ STATIC_ROOT = BASE_DIR + "static"
 SASS_PROCESSOR_ROOT = STATIC_ROOT
 
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "laimas@gmail.com"
 EMAIL_HOST_PASSWORD = ""

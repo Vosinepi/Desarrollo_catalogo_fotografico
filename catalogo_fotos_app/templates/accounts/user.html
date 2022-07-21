@@ -14,6 +14,18 @@ Perfil {% endblock %} {% block contenidoPagina %}
   <h3 class="center-align titulo-secciones panel-heading">{{user.username}}</h3>
   <div id="form-card" class="row">
     <div class="col s12 z-depth-6 card-panel">
+      {% if user_form.errors %}
+      <div class="alert alert-danger alert-dismissible" role="alert">
+          <div id="form_errors">
+              {% for key, value in user_form.errors.items %}
+                  <strong>{{ value }}</strong>
+              {% endfor %}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  {% endif %}
       <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row"></div>
@@ -30,13 +42,13 @@ Perfil {% endblock %} {% block contenidoPagina %}
           </div>
           <div class="row"></div>
           <div class="col s12">
-            <a href="#">Cambiar Password</a>
+            <a href="{% url "password_change" %}">Cambiar Password</a>
           </div>
           
           <div class="row"></div>
           <div class="row">
-            <div class="file-field input-field s12">
-              <div class="btn">
+            <div class="file-field input-field col s12">
+              <div class="btn ">
                 <span>Cambiar Avatar</span>
                 {{perfil_form.avatar}}
               </div>
@@ -47,7 +59,7 @@ Perfil {% endblock %} {% block contenidoPagina %}
           </div>
             <div class="row"></div>
             <div class="row"></div>
-            <div class="materialize-textarea col s12">
+            <div class="col s12">
               <label>Biografia</label>
               {{perfil_form.bio}} {{perfil_form.bio.errors}}
             </div>

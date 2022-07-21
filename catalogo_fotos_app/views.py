@@ -1,4 +1,3 @@
-from atexit import register
 from msilib.schema import ListView
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
@@ -11,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, DeleteView, FormView, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
@@ -22,6 +21,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.contrib import messages
+from django.urls import reverse_lazy
 
 from .forms import *
 from .models import Album, AlbumImage
@@ -29,7 +29,7 @@ from .admin import *
 
 
 def index(request):
-    print(Profile.objects.filter(user=request.user.id)[0])
+
     return render(
         request,
         "index.html",
@@ -254,6 +254,12 @@ def password_reset(request):
 
     form = PasswordResetForm()
     return render(request, "accounts/password_reset.html", {"form": form})
+
+
+class Cambiar_password(PasswordChangeView):
+    template_name = "accounts/cambiar_password.html"
+    success_message = "Contraseña cambiada correctamente"
+    success_url = reverse_lazy("index")
 
 
 @login_required

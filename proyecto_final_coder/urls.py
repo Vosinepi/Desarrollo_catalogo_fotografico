@@ -67,4 +67,5 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+    path("password_change/", views.Cambiar_password.as_view(), name="password_change"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
