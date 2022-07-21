@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit, Transpose
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -75,3 +76,13 @@ class Contacto(models.Model):
 
     def __unicode__(self):
         return self.nombre
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+
+    avatar = models.ImageField(default="default.jpg", upload_to="profile_images")
+    bio = models.TextField(default="", blank=True)
+
+    def __str__(self):
+        return self.user.username

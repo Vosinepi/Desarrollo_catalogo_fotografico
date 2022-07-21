@@ -1,4 +1,3 @@
-from ctypes.wintypes import tagSIZE
 import os
 import uuid
 import zipfile
@@ -67,3 +66,6 @@ class AlbumImageModelAdmin(admin.ModelAdmin):
     list_display = ("alt", "album", "tags")
     list_filter = ("album", "creada")
     search_fields = ("alt", "tags")
+
+
+admin.site.register(Profile)

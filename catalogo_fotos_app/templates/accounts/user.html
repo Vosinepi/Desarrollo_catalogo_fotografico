@@ -1,12 +1,77 @@
 {% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
-inicio {% endblock %} {% block contenidoPagina %}
+Perfil {% endblock %} {% block contenidoPagina %}
 
 <main>
-  <div class="row my-3 p-3">
-    <h3 class="center-align titulo-secciones lighten-4 panel-heading">
-      Este es el perfil de {{user.username}}
-    </h3>
+  <div class="container center-align">
+    <div class="row">
+      <img
+        class="imagen_perfil circle"
+        src="{{ user.profile.avatar.url }} "
+        style="cursor: pointer"
+      />
+    </div>
   </div>
+  <h3 class="center-align titulo-secciones panel-heading">{{user.username}}</h3>
+  <div id="form-card" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row"></div>
+        <div class="row">
+          <div class="col s6">
+            <label>Usuario</label>
+            {{user_form.username}} {{user_form.username.errors}}
+            
+          </div>
+          <div class="col s6">
+            <label>Email</label>
+            {{user_form.email}} {{user_form.email.errors}}
+            
+          </div>
+          <div class="row"></div>
+          <div class="col s12">
+            <a href="#">Cambiar Password</a>
+          </div>
+          
+          <div class="row"></div>
+          <div class="row">
+            <div class="file-field input-field s12">
+              <div class="btn">
+                <span>Cambiar Avatar</span>
+                {{perfil_form.avatar}}
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate valid" type="text">
+              </div>
+            </div>
+          </div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="materialize-textarea col s12">
+              <label>Biografia</label>
+              {{perfil_form.bio}} {{perfil_form.bio.errors}}
+            </div>
+          </div>
+          <div class="input-field col s12">
+            <button
+              type="submit"
+              value="submit"
+              class="btn waves-effect waves-light"
+            >
+              Salvar Cambios
+            </button>
+            <button
+              type="reset"
+              value="submit"
+              class="btn waves-effect waves-light"
+            >
+              Resetear
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  
 </main>
 
 {% endblock %}

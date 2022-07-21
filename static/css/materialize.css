@@ -82,6 +82,11 @@ main {
   width: 200px;
 }
 
+.imagen_perfil {
+  height: 150px;
+  margin-top: 100px;
+  
+}
 .materialize-red {
   background-color: #e51c23 !important;
 }

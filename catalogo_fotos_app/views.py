@@ -29,7 +29,11 @@ from .admin import *
 
 
 def index(request):
-    return render(request, "index.html")
+    print(Profile.objects.filter(user=request.user.id)[0])
+    return render(
+        request,
+        "index.html",
+    )
 
 
 # catalogo
@@ -254,7 +258,27 @@ def password_reset(request):
 
 @login_required
 def perfil(request):
-    return render(request, "accounts/user.html")
+    user_form = ActualizarUserForm(instance=request.user)
+    perfil_form = ActualizarPerfilForm(instance=request.user.profile)
+    if request.method == "POST":
+        user_form = ActualizarUserForm(request.POST, instance=request.user)
+        perfil_form = ActualizarPerfilForm(
+            request.POST, request.FILES, instance=request.user.profile
+        )
+        if user_form.is_valid() and perfil_form.is_valid():
+            user_form.save()
+            perfil_form.save()
+            messages.success(request, "Perfil actualizado correctamente")
+            return redirect("user")
+        else:
+            user_form = ActualizarUserForm(instance=request.user)
+            perfil_form = ActualizarPerfilForm(instance=request.user.profile)
+
+    return render(
+        request,
+        "accounts/user.html",
+        {"user_form": user_form, "perfil_form": perfil_form},
+    )
 
 
 # eliminar fotos desde vita detalle

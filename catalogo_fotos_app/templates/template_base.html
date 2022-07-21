@@ -73,11 +73,13 @@
           <div class="background">
             <img src="https://materializecss.com/images/office.jpg" />
           </div>
+          {% if user.is_authenticated %}
           <a
             ><img
               class="circle"
-              src="https://materializecss.com/images/office.jpg"
+              src="{{request.user.profile.avatar.url}}"
           /></a>
+          {% endif %}
           <a href="{%url "user" %}"><span class="white-text name">{{user.username}}</span></a>
           <a><span class="white-text email">{{user.email}}</span></a>
         </div>
