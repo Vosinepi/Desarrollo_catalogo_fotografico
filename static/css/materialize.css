@@ -93,6 +93,60 @@ main {
   text-align: center;
   align-items: center;
 }
+
+.presentacion_container {
+  margin: 50px auto !important;
+}
+
+.presentacion { 
+  margin-top: 50px;
+}
+.titulo{
+  color: #d7375c;
+}
+
+.parrafo_presentacion {
+ margin: 20px 0px 50px 0px;
+ color: #d7375c;
+}
+.icono_presentacion {
+  color: #d7375c;
+  font-size: 5rem;
+}
+.titulo_presentacion {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #62c5c9;
+}
+
+.imagen_quien {
+  position: absolute;
+  width: 350px;
+  top: 11%;
+  right: 61%;
+  opacity: 57%;
+}
+
+@media screen and (max-width: 600px) {
+  .imagen_quien {
+    width: 245px;
+    top: 9%;
+    right: 50%;
+  }
+}
+  
+}
+
+.parrafo {
+  color: #d7375c;
+  margin: 10px;
+}
+.parrafo_lista {
+  color: #d7375c;
+  /* list-style-type: circle !important; */
+  margin: 10px;
+}
 .materialize-red {
   background-color: #e51c23 !important;
 }

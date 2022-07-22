@@ -1,0 +1,72 @@
+{% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
+inicio {% endblock %} {% block contenidoPagina %}
+
+<main>
+  <div class="container presentacion_container">
+    <div class="col s12 z-depth-6 card-panel presentacion">
+      <h3 class="titulo center-align lighten-4">def ismael_piovani():</h3>
+      <img class="imagen_quien" src="{% static 'images/Recurso 1.svg' %}" alt="Analizame" />    
+      <div class="container row">
+        
+        <p class="parrafo_presentacion center-align">
+          Arquitecto Urbanista especializado en análisis de datos. Me desempeño
+          como analista en el área de proyectos territoriales de una ONG.
+          Mediante el uso de PYTHON y librerias como Numpy y Matplotlib genero
+          la información visual para el correcto análisis y exposición de los
+          resultados obtenidos. Resultados que muchas veces son volcados a una
+          web mediante el uso de DJANGO, HTML, CSS-SASS y JS ES6. Mi objetivo es
+          lograr ese sincretismo entre la programación y el diseño aplicado al
+          vivir. Mi formación como arquitecto/urbanista me dio las herramientas
+          para poder aproximarme a una buena interacción con la información y a
+          su vez ser capaz de traducir las necesidades en ideas concretas que
+          luego puedan "materializarse" en los proyectos requeridos.
+        </p>
+        
+        <div class="col s4">
+          <div class="center">
+            <i class="icono_presentacion material-icons prefix">work</i>
+            <h5 class="titulo_presentacion center-align">ANTECEDENTES</h5>
+            <p class="parrafo center-align lighten-4">
+              Administré proyectos de recolección y análisis de datos urbanos
+              para su posterior presentación. Proyectos realizados mediante el
+              uso de Python, librerías de análisis y muestreos visuales
+            </p>
+          </div>
+        </div>
+        <div class="col s4">
+          <div class="center">
+            <i class="icono_presentacion material-icons prefix">arrow_upward</i>
+            <h5 class="titulo_presentacion center-align">ESPECIALIZACIONES</h5>
+          </div>
+          <div class="center">
+            <ul>
+              <li class="parrafo_lista">Python / Numpy y Matplotlib</li>
+              <li class="parrafo_lista">Git y GitHub</li>
+              <li class="parrafo_lista">CSS - SASS</li>
+              <li class="parrafo_lista">Desarrollo de backend con DJANGO</li>
+              <li class="parrafo_lista">Programación HTML, y JS ES6</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col s4">
+          <div class="center">
+            <i class="icono_presentacion material-icons prefix">phone</i>
+            <h5 class="titulo_presentacion center-align">DATOS DE CONTACTO</h5>
+          </div>
+          <div>
+            <ul>
+             
+                <li class="parrafo"><a href="tel:11-35909287">Contacto: 11-35909287</a></li>
+                <li class="parrafo"><a href = "mailto:ismaelpiovani@gmail.com">ismaelpiovani@gmail.com</a></li>
+                <li class="parrafo" ><a href="https://www.linkedin.com/in/iber-ismael-piovani-8b35bbba/">LinkedIn</a></li>
+                <li class="parrafo" ><a href="https://github.com/Vosinepi">GitHub</a></li>
+            </ul>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

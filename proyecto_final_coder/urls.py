@@ -28,6 +28,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     re_path("base/", views.base, name="base"),
     path("", views.index, name="index"),
+    path("quien_soy/", views.quien_soy, name="quien_soy"),
     path("cargar_album/exito/", views.subida_exitosa, name="subida_exitosa"),
     re_path(r"catalogo", views.catalogo, name="catalogo"),  # albumes
     re_path(r"^album/(?P<slug>[-\w]+)$", views.AlbumDetail.as_view(), name="album"),

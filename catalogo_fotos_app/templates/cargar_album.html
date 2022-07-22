@@ -10,24 +10,24 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
         <div class="row"></div>
         <div class="row">
           <div class="input-field col s12">
-            {{form.titulo}}
+            {{form.titulo}} {{form.titulo.errors}}
             <label>Titulo de Album</label>
           </div>
           <div class="input-field col s12">
-            {{form.descripcion}}
+            {{form.descripcion}}{{form.descripcion.errors}}
             <label for="textarea1">Descripcion</label>
           </div>
           <div class="file-field input-field col s12">
             <div class="btn">
               <span>Miniatura</span>
-              {{form.thumb}}
+              {{form.thumb}}{{form.thumb.errors}}
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" type="text" />
             </div>
           </div>
           <div class="input-field col s12">
-            {{form.tags}}
+            {{form.tags}}{{form.tags.errors}}
             <label for="titulo">Etiquetas</label>
           </div>
           <label class="input-field col s12">
@@ -36,7 +36,7 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
           </label>
           <div class="col s12">
             <label>Slug</label>
-            {{form.slug}}
+            {{form.slug}}{{form.slug.errors}}
           </div>
           <div class="file-field input-field col s12">
             <div class="btn">
