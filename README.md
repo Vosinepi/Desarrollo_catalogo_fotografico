@@ -1,4 +1,8 @@
-<h2 align="center">Albums</h2>
+<h2 align="center">Catalogo de albums</h2>
+
+## Video
+
+[![Watch the video](https://img.youtube.com/vi/hF_7oZ8KCns/hqdefault.jpg)](https://youtu.be/hF_7oZ8KCns)
 
 ## Contenido
 
