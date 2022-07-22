@@ -31,6 +31,7 @@ from .admin import *
 def quien_soy(request):
     return render(request, "quien_soy.html")
 
+
 def index(request):
 
     return render(
@@ -291,6 +292,7 @@ def perfil(request):
 
 
 # eliminar fotos desde vita detalle
+@user
 def eliminar_foto(request, id):
     foto = AlbumImage.objects.get(id=id)
     foto.delete()
