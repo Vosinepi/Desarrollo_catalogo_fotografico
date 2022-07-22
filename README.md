@@ -10,7 +10,7 @@
 
 - App realizada en Django y Python que permite la carga de albumes de fotografias para su visualizacion es galerias tipo mosaicos basado en el estilo de Google Photos.
   La app permite cargar directamente desde un archivo zip y genera la compresion de las imaganes y los thumbs necesarios.
-- Permite la generacion de usuarios, su registro y la posibilida de resetear contraseña. (el envio de maail esta seteado para la prueba por consola, si desea dejarlo funcional cambiar el EMAIL_BACKEND en settings.py)
+- Permite la generacion de usuarios, su registro y la posibilida de resetear contraseña. (el envio de mail esta seteado para la prueba por consola, si desea dejarlo funcional cambiar el EMAIL_BACKEND y en settings.py)
 - la carga de albumes se realiza mediante admin panel o mediante un usuario con acceso especial a la seccion de la planilla de carga.
 - Tiene una seccion buscador.
 - App de contacto.
