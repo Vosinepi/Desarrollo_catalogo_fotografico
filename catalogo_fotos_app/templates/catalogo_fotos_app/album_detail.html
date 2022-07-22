@@ -34,7 +34,7 @@ media="screen,projection"
                                   
                     {% for item in images %}
                     <div >
-                    {% if user.is_authenticated %}
+                    {% if perms.catalogo_fotos_app.delete_albumimage %}
                     <a class = "borrar_foto btn-floating  btn-small waves-effect waves-light orange" href="{% url 'eliminar_foto' item.id %}" onclick="return confirm('¿Seguro quieres eliminar esta imagen?')">
                         <i class="material-icons">clear</i>
                             
