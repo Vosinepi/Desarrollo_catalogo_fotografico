@@ -37,7 +37,7 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
             
             <select multiple name="Usuario">
               <option value="" disabled selected>Elije Usuario</option>
-              {% for user in form.users_views %}
+              {% for user in form.users_permitions %}
               <option  value="{{user}}"></option>
               {% endfor %}
           </select>

@@ -29,7 +29,7 @@ class AlbumForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AlbumForm, self).__init__(*args, **kwargs)
-        self.fields["users_views"].choices = User.objects.all().values_list(
+        self.fields["users_permitions"].choices = User.objects.all().values_list(
             "username", "username"
         )
         

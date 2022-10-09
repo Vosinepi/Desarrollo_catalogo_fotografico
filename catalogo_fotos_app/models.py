@@ -14,6 +14,8 @@ from PIL import Image
 
 
 class Album(models.Model):
+    
+    
     titulo = models.CharField(max_length=70)
     descripcion = models.TextField(max_length=1024)
     thumb = ProcessedImageField(
@@ -26,7 +28,8 @@ class Album(models.Model):
     is_visible = models.BooleanField(default=True)
     creada = models.DateTimeField(auto_now_add=True)
     modificada = models.DateTimeField(auto_now_add=True)
-    users_views = models.CharField( max_length=250, choices=User.objects.all().values_list('username', 'username'), default='admin')
+    # users_views = models.CharField( max_length=250, choices=User.objects.all().values_list('username', 'username'), default='admin')
+    users_permitions = models.ManyToManyField(User, related_name="users_permitions")
     slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:
