@@ -23,6 +23,7 @@ inicio {% endblock %} {% block contenidoPagina %}
                   >Fotos</a
                 >
               </li>
+              {% if user.is_superuser%}
               <li>
                 <a
                   href="{% url 'cargar_album' %}"
@@ -31,6 +32,7 @@ inicio {% endblock %} {% block contenidoPagina %}
                   >Cargar</a
                 >
               </li>
+              {% endif %}
               <li>
                 <a
                   href="{% url 'quien_soy' %}"

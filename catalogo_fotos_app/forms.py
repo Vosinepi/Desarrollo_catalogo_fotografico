@@ -1,7 +1,9 @@
 from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
 from django.contrib.auth.models import User
+from django.forms import ModelChoiceField
 from catalogo_fotos_app.models import *
 
 # formulario carga album
@@ -9,9 +11,11 @@ class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
         fields = "__all__"
+        # users_views = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=User.objects.all(), required=False)
         exclude = []
         widgets = {
             "descripcion": forms.Textarea(attrs={"class": "materialize-textarea"}),
+            
             # "titulo": forms.TextInput(
             #     attrs={"class": "vTextField", "id": "id_titulo titulo_copiar"}
             # ),
@@ -23,9 +27,18 @@ class AlbumForm(forms.ModelForm):
 
     zip = forms.FileField(required=False)
 
+    def __init__(self, *args, **kwargs):
+        super(AlbumForm, self).__init__(*args, **kwargs)
+        self.fields["users_views"].choices = User.objects.all().values_list(
+            "username", "username"
+        )
+        
 
 # formulario registro users admin?
 class UserRegisterForm(UserCreationForm):
+    
+    
+    
     first_name = forms.CharField(
         label="Nombre",
         max_length=30,
@@ -88,7 +101,10 @@ class UserRegisterForm(UserCreationForm):
             }
         ),
     )
-
+    
+    
+    
+    
     # check = forms.BooleanField(
     #     required=True,
     #     widget=forms.CheckboxInput(

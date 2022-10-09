@@ -23,6 +23,8 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.urls import reverse_lazy
 
+
+
 from .forms import *
 from .models import Album, AlbumImage
 from .admin import *
@@ -86,6 +88,9 @@ class CargarAlbum(LoginRequiredMixin, FormView):
     success_url = "exito"
     print("cargar album")
 
+    
+   
+    
     def form_valid(self, form):
         print("funcion save_model")
         print("validacion ok")
@@ -93,6 +98,8 @@ class CargarAlbum(LoginRequiredMixin, FormView):
         album.modified = datetime.now()
         album.save()
 
+        
+        
         if form.cleaned_data["zip"] != None:
             zip = zipfile.ZipFile(form.cleaned_data["zip"])
             for filename in sorted(zip.namelist()):

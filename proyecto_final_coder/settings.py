@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "imagekit",
     # app propias
     "catalogo_fotos_app",
+    'e_commerce_app',
 ]
 
 MIDDLEWARE = [
