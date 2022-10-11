@@ -1,10 +1,9 @@
-#django
+# django
 from email.policy import default
-from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 
-#libreiras de terceros
+# libreiras de terceros
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit, Transpose
 import uuid
@@ -13,10 +12,8 @@ from PIL import Image
 # Create your models here.
 
 
-
 class Album(models.Model):
-    
-    
+
     titulo = models.CharField(max_length=70)
     descripcion = models.TextField(max_length=1024)
     thumb = ProcessedImageField(
@@ -31,7 +28,9 @@ class Album(models.Model):
     creada = models.DateTimeField(auto_now_add=True)
     modificada = models.DateTimeField(auto_now_add=True)
     # users_views = models.CharField( max_length=250, choices=User.objects.all().values_list('username', 'username'), default='admin')
-    users_permitions = models.ManyToManyField(User, related_name="users_permitions", blank=False)
+    users_permitions = models.ManyToManyField(
+        User, related_name="users_permitions", blank=False
+    )
     slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:
@@ -39,7 +38,7 @@ class Album(models.Model):
 
     def __unicode__(self):
         return self.titulo
-    
+
     def __str__(self):
         return self.titulo
 

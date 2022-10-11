@@ -1,26 +1,33 @@
-#django
-import re
-from tkinter import Widget
+# django
+
+
+from logging import PlaceHolder
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.http import QueryDict
-from pkg_resources import require
 
-#app modulos
+
+# app modulos
 from catalogo_fotos_app.models import *
 
 # formulario carga album
 class AlbumForm(forms.ModelForm):
-    users_permitions = forms.ModelMultipleChoiceField(queryset=User.objects.all(), required=True)
-    
+    users_permitions = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(), required=False
+    )
+
     class Meta:
         model = Album
         fields = "__all__"
-        exclude = []
+
         widgets = {
-            "descripcion": forms.Textarea(attrs={"class": "materialize-textarea"}),
-            
+            "descripcion": forms.Textarea(
+                attrs={
+                    "class": "materialize-textarea",
+                    "rows": 3,
+                    "cols": 30,
+                }
+            ),
             # "titulo": forms.TextInput(
             #     attrs={"class": "vTextField", "id": "id_titulo titulo_copiar"}
             # ),
@@ -29,21 +36,20 @@ class AlbumForm(forms.ModelForm):
             # ),
             # "slug": forms.HiddenInput()
         }  # para que no se muestre en el formulario pero tampoco se muestra en admin. VER ESTO
-    
+
     zip = forms.FileField(required=False)
 
-    # def __init__(self, *args, **kwargs):
-    #     super(AlbumForm, self).__init__(*args, **kwargs)
-    #     self.fields["users_permitions"].choices = User.objects.all().values_list(
-    #         "username", "username"
-    #     )
-        
+    def __init__(self, *args, **kwargs):
+        super(AlbumForm, self).__init__(*args, **kwargs)
+        self.fields["users_permitions"].choices = User.objects.all().values_list(
+            "id",
+            "username",
+        )
+
 
 # formulario registro users admin?
 class UserRegisterForm(UserCreationForm):
-    
-    
-    
+
     first_name = forms.CharField(
         label="Nombre",
         max_length=30,
@@ -106,10 +112,7 @@ class UserRegisterForm(UserCreationForm):
             }
         ),
     )
-    
-    
-    
-    
+
     # check = forms.BooleanField(
     #     required=True,
     #     widget=forms.CheckboxInput(

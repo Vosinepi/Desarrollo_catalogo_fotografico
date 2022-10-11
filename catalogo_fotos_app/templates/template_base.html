@@ -116,7 +116,14 @@
           ><i class="material-icons">dashboard</i>Fotos</a
         >
       </li>
+      {% if user.is_authenticated %}
       <li>
+        <a href="{%url 'mis_albumes' %}"
+          ><i class="material-icons">account_circle</i>Mis Albumes</a
+        >
+      {% endif %}
+      <li>
+      
         <a href="{%url 'contacto' %}"
           ><i class="material-icons">email</i>Contacto</a
         >

@@ -1,0 +1,51 @@
+{% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
+Albumes {% endblock %} {% block contenidoPagina %}
+
+<main>
+  <div class="container">
+    <div class="row">
+      {% for album in albums %}
+      <div class="col s12 m4">
+        <div class="card">
+          <div class="card-image">
+            <img
+              src="{{ album.thumb.url }}"
+              alt="{{ album.titulo }}"
+              class="dpg-album-card-image"
+            />
+            <span class="card-title">{{ album.titulo }}</span>
+            <a
+              class="btn-floating halfway-fab waves-effect waves-light orange"
+              href="{% url 'album' album.slug %}"
+              ><i class="material-icons">add</i></a
+            >
+          </div>
+          <div class="card-content">
+            <p>{{ album.descripcion|truncatechars:90 }}</p>
+          </div>
+        </div>
+      </div>
+    
+    {% endfor %}
+    <div class="pagination center">
+      <span class="step-links">
+        {% if albums.has_previous %}
+        <a
+          href="?page={{ albums.previous_page_number }}"
+          class="waves-effect waves-light btn btn-large"
+          >Anterior</a
+        >
+        {% endif %} {% if albums.has_next %}
+        <a
+          href="?page={{ albums.next_page_number }}"
+          class="waves-effect waves-light btn btn-large"
+          >Proximo</a
+        >
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
+

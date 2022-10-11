@@ -1,4 +1,4 @@
-#django
+# django
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import (
@@ -24,9 +24,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 
 
-
-
-#app modulos
+# app modulos
 from .forms import *
 from .models import Album, AlbumImage
 from .admin import *
@@ -63,6 +61,31 @@ def catalogo(request):
     return render(request, "catalogo.html", {"albums": list})
 
 
+@login_required
+def mis_albumes(request):
+    """
+    Retorna una lista de albumes que pertenecen al usuario logueado.
+    """
+
+    list = Album.objects.filter(users_permitions=request.user).order_by("-creada")
+    if list:
+
+        paginator = Paginator(list, 10)
+
+        page = request.GET.get("page")
+        try:
+            albums = paginator.page(page)
+        except PageNotAnInteger:
+            albums = paginator.page(1)  # If page is not an integer, deliver first page.
+        except EmptyPage:
+            albums = paginator.page(
+                paginator.num_pages
+            )  # If page is out of range (e.g.  9999), deliver last page of results.
+    else:
+        messages.error(request, "No tienes albumes para ver")
+    return render(request, "mis_albumes.html", {"albums": list})
+
+
 # vista detallada de un album
 class AlbumDetail(DetailView):
     model = Album
@@ -88,10 +111,9 @@ class CargarAlbum(LoginRequiredMixin, FormView):
     form_class = AlbumForm
     prepopulated_fields = {"slug": ("titulo",)}
     success_url = "exito"
-       
-    
+
     def form_valid(self, form):
-        print('entro a forma_valid')
+        print("entro a forma_valid")
         if form.is_valid():
             print("funcion save_model")
             print("validacion ok")
@@ -101,8 +123,7 @@ class CargarAlbum(LoginRequiredMixin, FormView):
             print("album guardado")
             form.save_m2m()
             print("m2m guardado")
-            
-            
+
             if form.cleaned_data["zip"] != None:
                 zip = zipfile.ZipFile(form.cleaned_data["zip"])
                 for filename in sorted(zip.namelist()):
@@ -132,8 +153,9 @@ class CargarAlbum(LoginRequiredMixin, FormView):
                     img.save()
                 zip.close()
             else:
-                print('no valido')    
+                print("no valido")
             return super(CargarAlbum, self).form_valid(form)
+
 
 @login_required
 def subida_exitosa(request):
@@ -187,6 +209,7 @@ class User_Login(LoginView):
                 self.request.session.modified = True
             return super(User_Login, self).form_valid(form)
 
+
 @login_required
 def logOut(request):
     logout(request)
@@ -228,6 +251,7 @@ def register_user(request):
     form = UserRegisterForm()
 
     return render(request, "accounts/registro_usuario.html", {"form": form})
+
 
 @login_required
 def password_reset(request):
@@ -304,6 +328,7 @@ def perfil(request):
 
 
 # eliminar fotos desde vita detalle
+
 
 @login_required
 def eliminar_foto(request, id):

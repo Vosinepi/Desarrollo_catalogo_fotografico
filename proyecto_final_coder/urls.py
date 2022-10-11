@@ -31,6 +31,7 @@ urlpatterns = [
     path("quien_soy/", views.quien_soy, name="quien_soy"),
     path("cargar_album/exito/", views.subida_exitosa, name="subida_exitosa"),
     re_path(r"catalogo", views.catalogo, name="catalogo"),  # albumes
+    re_path(r"mis_albumes", views.mis_albumes, name="mis_albumes"),  # mis albumes
     re_path(r"^album/(?P<slug>[-\w]+)$", views.AlbumDetail.as_view(), name="album"),
     path("cargar_album/", views.CargarAlbum.as_view(), name="cargar_album"),
     path("registro_usuario/", views.register_user, name="registro_usuario"),
