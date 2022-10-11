@@ -294,6 +294,7 @@ def perfil(request):
 # eliminar fotos desde vita detalle
 
 
+@login_required
 def eliminar_foto(request, id):
     foto = AlbumImage.objects.get(id=id)
     foto.delete()

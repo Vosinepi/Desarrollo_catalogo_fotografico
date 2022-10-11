@@ -4,8 +4,9 @@ gunicorn
 whitenoise
 psycopg2
 pillow
-sass_processor
-imagekit
+libsass
+django-compressor
+django-sass-processor
+django-imagekit
 datetime
-zipfile
 django-crispy-forms
