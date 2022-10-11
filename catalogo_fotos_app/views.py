@@ -88,12 +88,9 @@ class CargarAlbum(LoginRequiredMixin, FormView):
     form_class = AlbumForm
     prepopulated_fields = {"slug": ("titulo",)}
     success_url = "exito"
+       
     
-
-    
-   
-    
-    def form_valid(self, forms):
+    def form_valid(self, form):
         print('entro a forma_valid')
         if form.is_valid():
             print("funcion save_model")
