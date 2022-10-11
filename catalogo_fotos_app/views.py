@@ -1,4 +1,4 @@
-from msilib.schema import ListView
+#django
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import (
@@ -25,6 +25,8 @@ from django.urls import reverse_lazy
 
 
 
+
+#app modulos
 from .forms import *
 from .models import Album, AlbumImage
 from .admin import *
@@ -46,7 +48,7 @@ def index(request):
 
 
 def catalogo(request):
-    list = Album.objects.filter(is_visible=True).order_by("-creada")
+    list = Album.objects.filter(es_publico=True).order_by("-creada")
     paginator = Paginator(list, 10)
 
     page = request.GET.get("page")
@@ -86,51 +88,57 @@ class CargarAlbum(LoginRequiredMixin, FormView):
     form_class = AlbumForm
     prepopulated_fields = {"slug": ("titulo",)}
     success_url = "exito"
-    print("cargar album")
+    
 
     
    
     
-    def form_valid(self, form):
-        print("funcion save_model")
-        print("validacion ok")
-        album = form.save(commit=False)
-        album.modified = datetime.now()
-        album.save()
+    def form_valid(self, forms):
+        print('entro a forma_valid')
+        if form.is_valid():
+            print("funcion save_model")
+            print("validacion ok")
+            album = form.save(commit=False)
+            album.modified = datetime.now()
+            album.save()
+            print("album guardado")
+            form.save_m2m()
+            print("m2m guardado")
+            
+            
+            if form.cleaned_data["zip"] != None:
+                zip = zipfile.ZipFile(form.cleaned_data["zip"])
+                for filename in sorted(zip.namelist()):
 
-        
-        
-        if form.cleaned_data["zip"] != None:
-            zip = zipfile.ZipFile(form.cleaned_data["zip"])
-            for filename in sorted(zip.namelist()):
+                    file_name = os.path.basename(filename)
+                    if not file_name:
+                        continue
 
-                file_name = os.path.basename(filename)
-                if not file_name:
-                    continue
+                    data = zip.read(filename)
+                    contentfile = ContentFile(data)
 
-                data = zip.read(filename)
-                contentfile = ContentFile(data)
+                    img = AlbumImage()
+                    img.album = album
+                    img.alt = filename
+                    img.tags = album.tags
+                    img.album_titulo = album.titulo
+                    filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
+                    img.image.save(filename, contentfile)
 
-                img = AlbumImage()
-                img.album = album
-                img.alt = filename
-                img.tags = album.tags
-                img.album_titulo = album.titulo
-                filename = "{0}{1}.jpg".format(album.slug, str(uuid.uuid4())[-13:])
-                img.image.save(filename, contentfile)
+                    filepath = "{0}/albums/{1}".format(
+                        proyecto_final_coder.settings.MEDIA_ROOT, filename
+                    )
+                    with Image.open(filepath) as i:
+                        img.width, img.height = i.size
 
-                filepath = "{0}/albums/{1}".format(
-                    proyecto_final_coder.settings.MEDIA_ROOT, filename
-                )
-                with Image.open(filepath) as i:
-                    img.width, img.height = i.size
+                    img.thumb.save("thumb-{0}".format(filename), contentfile)
+                    img.save()
+                zip.close()
+            else:
+                print('no valido')    
+            return super(CargarAlbum, self).form_valid(form)
 
-                img.thumb.save("thumb-{0}".format(filename), contentfile)
-                img.save()
-            zip.close()
-        return super(CargarAlbum, self).form_valid(form)
-
-
+@login_required
 def subida_exitosa(request):
     return render(request, "subida_exitosa.html")
 
@@ -182,7 +190,7 @@ class User_Login(LoginView):
                 self.request.session.modified = True
             return super(User_Login, self).form_valid(form)
 
-
+@login_required
 def logOut(request):
     logout(request)
     return redirect("user_login")
@@ -224,7 +232,7 @@ def register_user(request):
 
     return render(request, "accounts/registro_usuario.html", {"form": form})
 
-
+@login_required
 def password_reset(request):
     if request.method == "POST":
         form = PasswordResetForm(request.POST)
@@ -267,7 +275,7 @@ def password_reset(request):
     return render(request, "accounts/password_reset.html", {"form": form})
 
 
-class Cambiar_password(PasswordChangeView):
+class Cambiar_password(PasswordChangeView, LoginRequiredMixin):
     template_name = "accounts/cambiar_password.html"
     success_message = "Contraseña cambiada correctamente"
     success_url = reverse_lazy("index")
@@ -300,7 +308,7 @@ def perfil(request):
 
 # eliminar fotos desde vita detalle
 
-
+@login_required
 def eliminar_foto(request, id):
     foto = AlbumImage.objects.get(id=id)
     foto.delete()
