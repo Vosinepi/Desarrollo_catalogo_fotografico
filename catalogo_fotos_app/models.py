@@ -1,12 +1,13 @@
-
+#django
 from email.policy import default
 from django.db import models
-import uuid
 from django.db import models
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFit, Transpose
 from django.contrib.auth.models import User
 
+#libreiras de terceros
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFit, Transpose
+import uuid
 from PIL import Image
 
 # Create your models here.
@@ -26,10 +27,11 @@ class Album(models.Model):
     )
     tags = models.CharField(max_length=250)
     is_visible = models.BooleanField(default=True)
+    es_publico = models.BooleanField(default=False)
     creada = models.DateTimeField(auto_now_add=True)
     modificada = models.DateTimeField(auto_now_add=True)
     # users_views = models.CharField( max_length=250, choices=User.objects.all().values_list('username', 'username'), default='admin')
-    users_permitions = models.ManyToManyField(User, related_name="users_permitions")
+    users_permitions = models.ManyToManyField(User, related_name="users_permitions", blank=False)
     slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:

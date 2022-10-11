@@ -21,7 +21,7 @@ from .models import User
 class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
     form = AlbumForm
     prepopulated_fields = {"slug": ("titulo",)}
-    list_display = ("titulo", "thumb", "is_visible")
+    list_display = ("titulo", "creada", "is_visible")
     list_filter = ("creada",)
 
     def save_model(self, request, obj, form, change):
@@ -29,7 +29,7 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
             album = form.save(commit=False)
             album.modified = datetime.now()
             album.save()
-
+            
             if form.cleaned_data["zip"] != None:
                 zip = zipfile.ZipFile(form.cleaned_data["zip"])
                 for filename in sorted(zip.namelist()):
@@ -58,7 +58,7 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
                     img.thumb.save("thumb-{0}".format(filename), contentfile)
                     img.save()
                 zip.close()
-            super(AlbumModelAdmin, self).save_model(request, obj, form, change)
+        super(AlbumModelAdmin, self).save_model(request, obj, form, change)
 
 
 @admin.register(AlbumImage)

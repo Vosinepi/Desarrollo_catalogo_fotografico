@@ -34,15 +34,18 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
             <label for="titulo">Elije usuario</label>
           </div>
           <div class="input-field col s12">
-            
+            {{form.users_permitions.errors}}
             <select multiple name="Usuario">
-              <option value="" disabled selected>Elije Usuario</option>
+              
               {% for user in form.users_permitions %}
               <option  value="{{user}}"></option>
               {% endfor %}
           </select>
-            
           </div>
+          <label class="input-field col s12">
+            {{ form.es_publico}}
+            <span for="remember-me">Es publico?</span>
+          </label>
           <label class="input-field col s12">
             {{ form.is_visible}}
             <span for="remember-me">Visible</span>
@@ -54,7 +57,7 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
           <div class="file-field input-field col s12">
             <div class="btn">
               <span>Zip</span>
-              {{form.zip}}
+              {{form.zip}}{{form.zip.errors}}
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" type="text" />
@@ -83,7 +86,7 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
 
     var slug = titulo.replace(/ /g, '-');
 
-    $('#id_slug').val(slug);
+  $('#id_slug').val(slug);
     
   });
   $(document).ready(function(){
