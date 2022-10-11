@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 django
 dj-database-url
 gunicorn
@@ -10,3 +11,4 @@ django-sass-processor
 django-imagekit
 datetime
 django-crispy-forms
+asgiref==3.5.2

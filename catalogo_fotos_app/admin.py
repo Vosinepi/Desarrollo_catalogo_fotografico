@@ -13,7 +13,7 @@ from PIL import Image
 from catalogo_fotos_app.models import *
 
 from .forms import AlbumForm
-
+from .models import User
 # Register your models here.
 
 

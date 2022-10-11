@@ -30,6 +30,19 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
             {{form.tags}}{{form.tags.errors}}
             <label for="titulo">Etiquetas</label>
           </div>
+          <div class="input-field col s12">
+            <label for="titulo">Elije usuario</label>
+          </div>
+          <div class="input-field col s12">
+            
+            <select multiple name="Usuario">
+              <option value="" disabled selected>Elije Usuario</option>
+              {% for user in form.users_views %}
+              <option  value="{{user}}"></option>
+              {% endfor %}
+          </select>
+            
+          </div>
           <label class="input-field col s12">
             {{ form.is_visible}}
             <span for="remember-me">Visible</span>
@@ -71,6 +84,10 @@ Cargar Album {% endblock %} {% block contenidoPagina %}
     var slug = titulo.replace(/ /g, '-');
 
     $('#id_slug').val(slug);
+    
+  });
+  $(document).ready(function(){
+    $('select').formSelect();
   });
 </script>
 {% endblock %} {% block footer %} {% endblock %}

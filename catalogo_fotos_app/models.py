@@ -1,12 +1,16 @@
+
+from email.policy import default
 from django.db import models
 import uuid
 from django.db import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit, Transpose
 from django.contrib.auth.models import User
+
 from PIL import Image
 
 # Create your models here.
+
 
 
 class Album(models.Model):
@@ -22,12 +26,16 @@ class Album(models.Model):
     is_visible = models.BooleanField(default=True)
     creada = models.DateTimeField(auto_now_add=True)
     modificada = models.DateTimeField(auto_now_add=True)
+    users_views = models.CharField( max_length=250, choices=User.objects.all().values_list('username', 'username'), default='admin')
     slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:
         ordering = ["-creada"]
 
     def __unicode__(self):
+        return self.titulo
+    
+    def __str__(self):
         return self.titulo
 
 
