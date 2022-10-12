@@ -47,7 +47,7 @@ def index(request):
 
 def catalogo(request):
     list = Album.objects.filter(es_publico=True).order_by("-creada")
-    paginator = Paginator(list, 10)
+    paginator = Paginator(list, 9)
 
     page = request.GET.get("page")
     try:
@@ -58,7 +58,7 @@ def catalogo(request):
         albums = paginator.page(
             paginator.num_pages
         )  # If page is out of range (e.g.  9999), deliver last page of results.
-    return render(request, "catalogo.html", {"albums": list})
+    return render(request, "catalogo.html", {"albums": albums})
 
 
 @login_required
@@ -87,21 +87,27 @@ def mis_albumes(request):
 
 
 # vista detallada de un album
-class AlbumDetail(DetailView):
+class AlbumDetail(DetailView, LoginRequiredMixin):
     model = Album
 
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super(AlbumDetail, self).get_context_data(**kwargs)
-        print(context)
-        # Add in a QuerySet of all the images
-        context["images"] = AlbumImage.objects.filter(album=self.object.id)
-        print(len(context["images"]))
-        if len(context["images"]) == 0:
-            return None
+    def get_context_data(
+        self,
+        **kwargs,
+    ):
+        if AlbumImage.objects.filter(album=self.object.id):
+            # Call the base implementation first to get a context
+            context = super(AlbumDetail, self).get_context_data(**kwargs)
+            print(context)
+            # Add in a QuerySet of all the images
+            context["images"] = AlbumImage.objects.filter(album=self.object.id)
+            print(len(context["images"]))
+            if len(context["images"]) == 0:
+                return None
+            else:
+                print(context["images"][0].album.slug)
+                return context
         else:
-            print(context["images"][0].album.slug)
-            return context
+            messages.error(self.request, "El albun no tiene fotos")
 
 
 # carga de albumes por app

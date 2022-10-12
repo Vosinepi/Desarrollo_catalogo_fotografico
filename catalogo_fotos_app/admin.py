@@ -1,6 +1,7 @@
 import os
 import uuid
 import zipfile
+import rarfile
 import proyecto_final_coder.settings
 from datetime import datetime
 
@@ -14,6 +15,7 @@ from catalogo_fotos_app.models import *
 
 from .forms import AlbumForm
 from .models import User
+
 # Register your models here.
 
 
@@ -29,16 +31,20 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
             album = form.save(commit=False)
             album.modified = datetime.now()
             album.save()
-            
-            if form.cleaned_data["zip"] != None:
-                zip = zipfile.ZipFile(form.cleaned_data["zip"])
-                for filename in sorted(zip.namelist()):
+
+            if form.cleaned_data["archivo"]:
+                if form.cleaned_data["archivo"].name.endswith(".rar"):
+                    archivo = rarfile.RarFile(form.cleaned_data["archivo"], mode="r")
+                else:
+                    archivo = zipfile.ZipFile(form.cleaned_data["archivo"])
+
+                for filename in sorted(archivo.namelist()):
 
                     file_name = os.path.basename(filename)
                     if not file_name:
                         continue
 
-                    data = zip.read(filename)
+                    data = archivo.read(filename)
                     contentfile = ContentFile(data)
 
                     img = AlbumImage()
@@ -57,7 +63,7 @@ class AlbumModelAdmin(admin.ModelAdmin):  # carga de albumes admin
 
                     img.thumb.save("thumb-{0}".format(filename), contentfile)
                     img.save()
-                zip.close()
+                archivo.close()
         super(AlbumModelAdmin, self).save_model(request, obj, form, change)
 
 

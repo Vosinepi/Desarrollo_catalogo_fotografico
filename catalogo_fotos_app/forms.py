@@ -37,7 +37,7 @@ class AlbumForm(forms.ModelForm):
             # "slug": forms.HiddenInput()
         }  # para que no se muestre en el formulario pero tampoco se muestra en admin. VER ESTO
 
-    zip = forms.FileField(required=False)
+    archivo = forms.FileField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(AlbumForm, self).__init__(*args, **kwargs)

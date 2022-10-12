@@ -1,8 +1,12 @@
 {% extends 'template_base.html' %} {% load static %} {% block tituloPagina %}
-Albumes {% endblock %} {% block contenidoPagina %}
+Albumes {% endblock %} {% block css %}
+
+<link rel="stylesheet" href="{% static 'css/justifiedGallery.css' %}" />
+
+{% endblock %} {% block contenidoPagina %}
 
 <main>
-  <div class="container">
+  <div id="basicExample" class="container">
     <div class="row">
       {% for album in albums %}
       <div class="col s12 m4">
@@ -25,8 +29,9 @@ Albumes {% endblock %} {% block contenidoPagina %}
           </div>
         </div>
       </div>
-    
-    {% endfor %}
+
+      {% endfor %}
+    </div>
     <div class="pagination center">
       <span class="step-links">
         {% if albums.has_previous %}

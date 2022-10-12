@@ -19,7 +19,15 @@ media="screen,projection"
 {% block contenidoPagina %}
 <main>
 {% if album.is_visible %}
-
+<div class="col s12">
+    <a
+      href="{% url 'catalogo' %}"
+      class="boton-index waves-effect waves-light btn-large"
+      ><i class="icono-index material-icons left orange-text">arrow_back</i
+      >VOLVER</a>
+      </div>
+    
+</div>
 
 <article class="row" style = "width: 80%">
     <header class="col s12 m12 l10 offset-l1">
@@ -29,7 +37,7 @@ media="screen,projection"
         <p class = 'flow-text descripcion_album'>{{ album.descripcion }}</p>
 
     </section>    
-   
+    
     <div  id="basicExample">
                                   
                     {% for item in images %}
@@ -127,9 +135,30 @@ media="screen,projection"
             </div>
 
         </div>
+
+        <div class="col s12">
+            <a
+              href="{% url 'catalogo' %}"
+              class="boton-index waves-effect waves-light btn-large bottom"
+              ><i class="icono-index material-icons left orange-text">arrow_back</i
+              >VOLVER</a>
+              </div>
+            
+        </div>
 {% else %}
 
-<h3 class="center-align titulo-seccion lighten-4">Este album esta vacio.</h3>
+<div class="container center">
+    
+      <div class="col s12">
+    <a
+      href="{% url 'catalogo' %}"
+      class="boton-index waves-effect waves-light btn-large"
+      ><i class="icono-index material-icons left orange-text">arrow_back</i
+      >VOLVER</a
+    >
+      </div>
+    
+    </div>
 
 
 {% endif %}
